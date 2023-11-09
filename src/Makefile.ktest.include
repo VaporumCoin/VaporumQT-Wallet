@@ -1,44 +1,44 @@
-TESTS += komodo-test
-bin_PROGRAMS += komodo-test
+TESTS += vaporum-test
+bin_PROGRAMS += vaporum-test
 
 # tool for generating our public parameters
-komodo_test_SOURCES = \
-    test-komodo/main.cpp \
-    test-komodo/testutils.cpp \
-    test-komodo/test_cryptoconditions.cpp \
-    test-komodo/test_coinimport.cpp \
-    test-komodo/test_eval_bet.cpp \
-    test-komodo/test_eval_notarisation.cpp \
-    test-komodo/test_parse_notarisation.cpp \
-    test-komodo/test_buffered_file.cpp \
-    test-komodo/test_sha256_crypto.cpp \
-    test-komodo/test_script_standard_tests.cpp \
-    test-komodo/test_multisig_tests.cpp \
-    test-komodo/test_merkle_tests.cpp \
-    test-komodo/test_addrman.cpp \
-    test-komodo/test_netbase_tests.cpp \
-    test-komodo/test_events.cpp \
-    test-komodo/test_hex.cpp \
-    test-komodo/test_haraka_removal.cpp \
-    test-komodo/test_oldhash_removal.cpp \
-    test-komodo/test_kmd_feat.cpp \
-    test-komodo/test_legacy_events.cpp \
-    test-komodo/test_parse_args.cpp
+vaporum_test_SOURCES = \
+    test-vaporum/main.cpp \
+    test-vaporum/testutils.cpp \
+    test-vaporum/test_cryptoconditions.cpp \
+    test-vaporum/test_coinimport.cpp \
+    test-vaporum/test_eval_bet.cpp \
+    test-vaporum/test_eval_notarisation.cpp \
+    test-vaporum/test_parse_notarisation.cpp \
+    test-vaporum/test_buffered_file.cpp \
+    test-vaporum/test_sha256_crypto.cpp \
+    test-vaporum/test_script_standard_tests.cpp \
+    test-vaporum/test_multisig_tests.cpp \
+    test-vaporum/test_merkle_tests.cpp \
+    test-vaporum/test_addrman.cpp \
+    test-vaporum/test_netbase_tests.cpp \
+    test-vaporum/test_events.cpp \
+    test-vaporum/test_hex.cpp \
+    test-vaporum/test_haraka_removal.cpp \
+    test-vaporum/test_oldhash_removal.cpp \
+    test-vaporum/test_kmd_feat.cpp \
+    test-vaporum/test_legacy_events.cpp \
+    test-vaporum/test_parse_args.cpp
 
 if TARGET_WINDOWS
-komodo_test_SOURCES += test-komodo/komodo-test-res.rc
+vaporum_test_SOURCES += test-vaporum/vaporum-test-res.rc
 endif
 
-komodo_test_CPPFLAGS = $(komodod_CPPFLAGS)
+vaporum_test_CPPFLAGS = $(vaporumd_CPPFLAGS)
 
-komodo_test_LDADD = -lgtest $(komodod_LDADD)
+vaporum_test_LDADD = -lgtest $(vaporumd_LDADD)
 
-komodo_test_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) -static
-komodo_test_LIBTOOLFLAGS = --tag CXX
+vaporum_test_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) -static
+vaporum_test_LIBTOOLFLAGS = --tag CXX
 
 yellow := $(shell tput setaf 11)
 reset := $(shell tput sgr0)
-$(info $(yellow)[ Decker ]$(reset) Check the $(yellow)komodo_test$(reset) dependencies ...)
+$(info $(yellow)[ Decker ]$(reset) Check the $(yellow)vaporum_test$(reset) dependencies ...)
 
-$(info $(yellow)$$komodod_LDADD$(reset) is [$(komodod_LDADD)])
-$(info $(yellow)$$komodo_test_LDADD$(reset) is [${komodo_test_LDADD}])
+$(info $(yellow)$$vaporumd_LDADD$(reset) is [$(vaporumd_LDADD)])
+$(info $(yellow)$$vaporum_test_LDADD$(reset) is [${vaporum_test_LDADD}])

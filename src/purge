@@ -1,5 +1,5 @@
-rm -rf ~/.komodo/$1/chainstate
-rm -rf ~/.komodo/$1/database
-rm -rf ~/.komodo/$1/blocks
-rm -rf ~/.komodo/$1/komodostate
+rm -rf ~/.vaporum/$1/chainstate
+rm -rf ~/.vaporum/$1/database
+rm -rf ~/.vaporum/$1/blocks
+rm -rf ~/.vaporum/$1/vaporumstate
 

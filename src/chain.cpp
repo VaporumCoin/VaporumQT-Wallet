@@ -19,10 +19,10 @@
  ******************************************************************************/
 
 #include "chain.h"
-#include "komodo_defs.h"
-#include "komodo_globals.h"
+#include "vaporum_defs.h"
+#include "vaporum_globals.h"
 #include "notaries_staked.h"
-#include "komodo_hardfork.h"
+#include "vaporum_hardfork.h"
 
 using namespace std;
 

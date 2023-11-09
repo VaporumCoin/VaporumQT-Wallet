@@ -1,6 +1,6 @@
-# Komodo Cryptoconditons Terminal User Interfaces (aka TUIs)
+# Vaporum Cryptoconditons Terminal User Interfaces (aka TUIs)
 
-These tools creating for demonstration and partial automation of Komodo cryptoconditions modules testing. (RogueCC game, AssetsCC, OraclesCC, GatewaysCC, ...)
+These tools creating for demonstration and partial automation of Vaporum cryptoconditions modules testing. (RogueCC game, AssetsCC, OraclesCC, GatewaysCC, ...)
 
 
 Developer installation (on Ubuntu 18.04) :
@@ -40,7 +40,7 @@ Have files uploader/downloader functionality - also there is a AWS branch for AW
 
 `python3 gateways_usage_tui.py`
 
-At the moment raw version of manual gateway how-to guide can be found here: https://docs.komodoplatform.com/cc/contracts/gateways/scenarios/tutorial.html I advice to read it before you start use this tool to understand the flow.
+At the moment raw version of manual gateway how-to guide can be found here: https://docs.vaporumplatform.com/cc/contracts/gateways/scenarios/tutorial.html I advice to read it before you start use this tool to understand the flow.
 
 # TUI for AssetsCC (not much finished)
 

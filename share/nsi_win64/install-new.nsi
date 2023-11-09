@@ -2,11 +2,11 @@ Target x86-unicode
 ; SetCompressor lzma
 
 ; Settings 
-Name "KomodoOcean (Komodo-Qt)"
-OutFile "komodo-qt-install.exe"
+Name "VaporumOcean (Vaporum-Qt)"
+OutFile "vaporum-qt-install.exe"
 RequestExecutionLevel admin
-InstallDir "$PROGRAMFILES64\KomodoOcean"
-Icon "komodo.ico"
+InstallDir "$PROGRAMFILES64\VaporumOcean"
+Icon "vaporum.ico"
 CRCCheck on
 
 ; Includes
@@ -19,10 +19,10 @@ Page instfiles
 
 ;--------------------------------
 
-Section "Install Komodo-Qt (GUI)" Section1
+Section "Install Vaporum-Qt (GUI)" Section1
   SetOutPath $INSTDIR
-  File "content\komodo-qt-win.exe"
-  CreateShortCut "$DESKTOP\Komodo-Qt.lnk" "$INSTDIR\komodo-qt-win.exe"
+  File "content\vaporum-qt-win.exe"
+  CreateShortCut "$DESKTOP\Vaporum-Qt.lnk" "$INSTDIR\vaporum-qt-win.exe"
 SectionEnd
 
 Section "Download ZCash Params" Section3
@@ -90,11 +90,11 @@ Abort
 next_5:
 SectionEnd
 
-Section "Create komodo.conf" Section2
+Section "Create vaporum.conf" Section2
   SetOverwrite on
-  CreateDirectory "$APPDATA\Komodo"  
-  SetOutPath $APPDATA\Komodo
-  File "content\komodo.conf"
+  CreateDirectory "$APPDATA\Vaporum"  
+  SetOutPath $APPDATA\Vaporum
+  File "content\vaporum.conf"
 SectionEnd
 
 # Installer functions

@@ -1,5 +1,5 @@
-#ifndef KOMODO_QT_CALLBACK_H
-#define KOMODO_QT_CALLBACK_H
+#ifndef VAPORUM_QT_CALLBACK_H
+#define VAPORUM_QT_CALLBACK_H
 
 #include <QObject>
 
@@ -27,4 +27,4 @@ FunctionCallback<F>* makeCallback(F f)
     return new FunctionCallback<F>(std::move(f));
 }
 
-#endif // KOMODO_QT_CALLBACK_H
+#endif // VAPORUM_QT_CALLBACK_H

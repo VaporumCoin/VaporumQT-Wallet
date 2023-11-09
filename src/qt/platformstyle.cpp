@@ -86,9 +86,9 @@ PlatformStyle::PlatformStyle(const QString &_name, bool _imagesOnButtons, bool _
         const QColor colorHighlightFg(QApplication::palette().color(QPalette::HighlightedText));
         const QColor colorText(QApplication::palette().color(QPalette::WindowText));
         const int colorTextLightness = colorText.lightness();
-        // QColor colorbase = QColor(0, 94, 94); // Komodo Color
-        // QColor colorbase = QColor(38, 69, 107);  // Komodo Dark Blue
-        QColor colorbase = QColor(43, 102, 128);    // Komodo Light Blue
+        // QColor colorbase = QColor(0, 94, 94); // Vaporum Color
+        // QColor colorbase = QColor(38, 69, 107);  // Vaporum Dark Blue
+        QColor colorbase = QColor(88, 92, 94);    // Vaporum Medium Grey
 
         /*if (abs(colorHighlightBg.lightness() - colorTextLightness) < abs(colorHighlightFg.lightness() - colorTextLightness))
             colorbase = colorHighlightBg;

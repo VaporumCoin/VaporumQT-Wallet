@@ -75,8 +75,8 @@ venv-mnf/
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
-src/qt/komodo-qt
-Komodo-Qt.app
+src/qt/vaporum-qt
+Vaporum-Qt.app
 background.tiff*
 
 # Unit-tests
@@ -124,14 +124,14 @@ src/qt/*.moc
 src/qt/moc_*.cpp           
 src/qt/forms/ui_*.h        
 src/qt/test/moc*.cpp       
-komodo-qt                 
-komodo-qt_test            
+vaporum-qt                 
+vaporum-qt_test            
 src/qt/gen*
 
-src/config/komodo-config.h
-src/config/komodo-config.h.in
-src/komodod
-src/qt/komodo-qt
+src/config/vaporum-config.h
+src/config/vaporum-config.h.in
+src/vaporumd
+src/qt/vaporum-qt
 
 # chain files for iguana
 src/qt/*_7776

@@ -4,7 +4,7 @@
 
 #include "zaddresstablemodel.h"
 
-#include "komodo_defs.h"
+#include "vaporum_defs.h"
 
 #include "guiutil.h"
 #include "walletmodel.h"
@@ -406,7 +406,7 @@ QModelIndex ZAddressTableModel::index(int row, int column, const QModelIndex &pa
 void ZAddressTableModel::updateEntry(const QString &address,
         const QString &label, bool isMine, const QString &purpose, int status)
 {
-    // Update address book model from Komodo core
+    // Update address book model from Vaporum core
     priv->updateEntry(address, label, isMine, purpose, status);
 }
 
@@ -438,7 +438,7 @@ QString ZAddressTableModel::addRow(const QString &type, const QString &label, co
     else if(type == Receive)
     {
         // Generate a new address to associate with given label
-        if ( GetTime() < KOMODO_SAPLING_ACTIVATION )
+        if ( GetTime() < VAPORUM_SAPLING_ACTIVATION )
         {
             strAddress = EncodePaymentAddress(wallet->GenerateNewSproutZKey());
             strLabel = "z-sprout";

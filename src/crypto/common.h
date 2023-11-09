@@ -17,7 +17,7 @@
 #include "compat/endian.h"
 
 #if defined(NDEBUG)
-# error "Komodo cannot be compiled without assertions."
+# error "Vaporum cannot be compiled without assertions."
 #endif
 
 uint16_t static inline ReadLE16(const unsigned char* ptr)

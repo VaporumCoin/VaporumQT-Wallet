@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_RPCCONSOLE_H
-#define KOMODO_QT_RPCCONSOLE_H
+#ifndef VAPORUM_QT_RPCCONSOLE_H
+#define VAPORUM_QT_RPCCONSOLE_H
 
 #include "guiutil.h"
 #include "peertablemodel.h"
@@ -27,7 +27,7 @@ class QMenu;
 class QItemSelection;
 QT_END_NAMESPACE
 
-/** Local Komodo RPC console. */
+/** Local Vaporum RPC console. */
 class RPCConsole: public QWidget
 {
     Q_OBJECT
@@ -157,4 +157,4 @@ private:
     void updateNetworkState();
 };
 
-#endif // KOMODO_QT_RPCCONSOLE_H
+#endif // VAPORUM_QT_RPCCONSOLE_H

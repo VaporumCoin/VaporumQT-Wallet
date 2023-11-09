@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_TRANSACTIONVIEW_H
-#define KOMODO_QT_TRANSACTIONVIEW_H
+#ifndef VAPORUM_QT_TRANSACTIONVIEW_H
+#define VAPORUM_QT_TRANSACTIONVIEW_H
 
 #include "guiutil.h"
 
@@ -115,4 +115,4 @@ public Q_SLOTS:
 
 };
 
-#endif // KOMODO_QT_TRANSACTIONVIEW_H
+#endif // VAPORUM_QT_TRANSACTIONVIEW_H

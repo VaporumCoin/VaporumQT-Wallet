@@ -16,7 +16,7 @@ OpenURIDialog::OpenURIDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 #if QT_VERSION >= 0x040700
-    ui->uriEdit->setPlaceholderText("komodo:");
+    ui->uriEdit->setPlaceholderText("vaporum:");
 #endif
 }
 
@@ -33,7 +33,7 @@ QString OpenURIDialog::getURI()
 void OpenURIDialog::accept()
 {
     SendCoinsRecipient rcp;
-    if(GUIUtil::parseKomodoURI(getURI(), &rcp))
+    if(GUIUtil::parseVaporumURI(getURI(), &rcp))
     {
         /* Only accept value URIs */
         QDialog::accept();
@@ -48,5 +48,5 @@ void OpenURIDialog::on_selectFileButton_clicked()
     if(filename.isEmpty())
         return;
     QUrl fileUri = QUrl::fromLocalFile(filename);
-    ui->uriEdit->setText("komodo:?r=" + QUrl::toPercentEncoding(fileUri.toString()));
+    ui->uriEdit->setText("vaporum:?r=" + QUrl::toPercentEncoding(fileUri.toString()));
 }

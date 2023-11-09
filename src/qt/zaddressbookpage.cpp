@@ -10,7 +10,7 @@
 #include "ui_zaddressbookpage.h"
 
 #include "zaddresstablemodel.h"
-#include "komodooceangui.h"
+#include "vaporumoceangui.h"
 #include "csvmodelwriter.h"
 #include "editzaddressdialog.h"
 #include "guiutil.h"
@@ -67,11 +67,11 @@ ZAddressBookPage::ZAddressBookPage(const PlatformStyle *platformStyle, Mode _mod
     switch(tab)
     {
     case SendingTab:
-        ui->labelExplanation->setText(tr("These are your Komodo z-addresses for sending payments. Always check the amount and the receiving z-address before sending coins."));
+        ui->labelExplanation->setText(tr("These are your Vaporum z-addresses for sending payments. Always check the amount and the receiving z-address before sending coins."));
         ui->deleteAddress->setVisible(true);
         break;
     case ReceivingTab:
-        ui->labelExplanation->setText(tr("These are your Komodo z-addresses for receiving payments. It is recommended to use a new receiving z-address for each transaction."));
+        ui->labelExplanation->setText(tr("These are your Vaporum z-addresses for receiving payments. It is recommended to use a new receiving z-address for each transaction."));
         ui->deleteAddress->setVisible(false);
         break;
     }

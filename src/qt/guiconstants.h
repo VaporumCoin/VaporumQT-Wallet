@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_GUICONSTANTS_H
-#define KOMODO_QT_GUICONSTANTS_H
+#ifndef VAPORUM_QT_GUICONSTANTS_H
+#define VAPORUM_QT_GUICONSTANTS_H
 
 /* Milliseconds between model updates */
 static const int MODEL_UPDATE_DELAY = 250;
@@ -11,7 +11,7 @@ static const int MODEL_UPDATE_DELAY = 250;
 /* AskPassphraseDialog -- Maximum passphrase length */
 static const int MAX_PASSPHRASE_SIZE = 1024;
 
-/* KomodoOceanGUI -- Size of icons in status bar */
+/* VaporumOceanGUI -- Size of icons in status bar */
 static const int STATUSBAR_ICONSIZE = 16;
 
 static const bool DEFAULT_SPLASHSCREEN = true;
@@ -46,9 +46,9 @@ static const int MAX_URI_LENGTH = 255;
 /* Number of frames in spinner animation */
 #define SPINNER_FRAMES 36
 
-#define QAPP_ORG_NAME "Komodo"
-#define QAPP_ORG_DOMAIN "komodo.org"
-#define QAPP_APP_NAME_DEFAULT "KomodoOceanGUI"
-#define QAPP_APP_NAME_TESTNET "KomodoOceanGUI-testnet"
+#define QAPP_ORG_NAME "Vaporum"
+#define QAPP_ORG_DOMAIN "vaporum.org"
+#define QAPP_APP_NAME_DEFAULT "VaporumOceanGUI"
+#define QAPP_APP_NAME_TESTNET "VaporumOceanGUI-testnet"
 
-#endif // KOMODO_QT_GUICONSTANTS_H
+#endif // VAPORUM_QT_GUICONSTANTS_H

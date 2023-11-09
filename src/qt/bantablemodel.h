@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_BANTABLEMODEL_H
-#define KOMODO_QT_BANTABLEMODEL_H
+#ifndef VAPORUM_QT_BANTABLEMODEL_H
+#define VAPORUM_QT_BANTABLEMODEL_H
 
 #include "net.h"
 
@@ -70,4 +70,4 @@ private:
     std::unique_ptr<BanTablePriv> priv;
 };
 
-#endif // KOMODO_QT_BANTABLEMODEL_H
+#endif // VAPORUM_QT_BANTABLEMODEL_H

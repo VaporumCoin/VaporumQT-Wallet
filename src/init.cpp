@@ -35,10 +35,10 @@
 #include "httprpc.h"
 #include "key.h"
 #include "notarisationdb.h"
-#include "komodo.h"
-#include "komodo_globals.h"
-#include "komodo_notary.h"
-#include "komodo_gateway.h"
+#include "vaporum.h"
+#include "vaporum_globals.h"
+#include "vaporum_notary.h"
+#include "vaporum_gateway.h"
 #include "main.h"
 
 #ifdef ENABLE_MINING
@@ -99,16 +99,16 @@
 
 using namespace std;
 
-#include "komodo_defs.h"
-#include "komodo_extern_globals.h"
+#include "vaporum_defs.h"
+#include "vaporum_extern_globals.h"
 #include "assetchain.h"
 
-#include "komodo_gateway.h"
+#include "vaporum_gateway.h"
 #include "rpc/net.h"
 #include <event2/event.h>
 extern void ThreadSendAlert();
-//extern bool komodo_dailysnapshot(int32_t height);  //todo remove
-//extern int32_t KOMODO_SNAPSHOT_INTERVAL;
+//extern bool vaporum_dailysnapshot(int32_t height);  //todo remove
+//extern int32_t VAPORUM_SNAPSHOT_INTERVAL;
 
 ZCJoinSplit* pzcashParams = NULL;
 
@@ -393,7 +393,7 @@ std::string HelpMessage(HelpMessageMode mode)
     strUsage += HelpMessageOpt("-checkblocks=<n>", strprintf(_("How many blocks to check at startup (default: %u, 0 = all)"), 288));
     strUsage += HelpMessageOpt("-checklevel=<n>", strprintf(_("How thorough the block verification of -checkblocks is (0-4, default: %u)"), 3));
     strUsage += HelpMessageOpt("-clientname=<SomeName>", _("Full node client name, default 'MagicBean'"));
-    strUsage += HelpMessageOpt("-conf=<file>", strprintf(_("Specify configuration file (default: %s)"), "komodo.conf"));
+    strUsage += HelpMessageOpt("-conf=<file>", strprintf(_("Specify configuration file (default: %s)"), "vaporum.conf"));
     if (mode == HMM_BITCOIND)
     {
 #if !defined(WIN32)
@@ -409,7 +409,7 @@ std::string HelpMessage(HelpMessageMode mode)
     strUsage += HelpMessageOpt("-par=<n>", strprintf(_("Set the number of script verification threads (%u to %d, 0 = auto, <0 = leave that many cores free, default: %d)"),
         -(int)boost::thread::hardware_concurrency(), MAX_SCRIPTCHECK_THREADS, DEFAULT_SCRIPTCHECK_THREADS));
 #ifndef _WIN32
-    strUsage += HelpMessageOpt("-pid=<file>", strprintf(_("Specify pid file (default: %s)"), "komodod.pid"));
+    strUsage += HelpMessageOpt("-pid=<file>", strprintf(_("Specify pid file (default: %s)"), "vaporumd.pid"));
 #endif
     strUsage += HelpMessageOpt("-prune=<n>", strprintf(_("Reduce storage requirements by pruning (deleting) old blocks. This mode disables wallet support and is incompatible with -txindex. "
             "Warning: Reverting this setting requires re-downloading the entire blockchain. "
@@ -591,7 +591,7 @@ std::string HelpMessage(HelpMessageMode mode)
         strUsage += HelpMessageOpt("-metricsui", _("Set to 1 for a persistent metrics screen, 0 for sequential metrics output (default: 1 if running in a console, 0 otherwise)"));
         strUsage += HelpMessageOpt("-metricsrefreshtime", strprintf(_("Number of seconds between metrics refreshes (default: %u if running in a console, %u otherwise)"), 1, 600));
     }
-    strUsage += HelpMessageGroup(_("Komodo Asset Chain options:"));
+    strUsage += HelpMessageGroup(_("Vaporum Asset Chain options:"));
     strUsage += HelpMessageOpt("-ac_algo", _("Choose PoW mining algorithm, default is Equihash"));
     strUsage += HelpMessageOpt("-ac_blocktime", _("Block time in seconds, default is 60"));
     strUsage += HelpMessageOpt("-ac_cc", _("Cryptoconditions, default 0"));
@@ -677,8 +677,8 @@ void CleanupBlockRevFiles()
                 remove(it->path());
         }
     }
-    path komodostate = GetDataDir() / KOMODO_STATE_FILENAME;
-    remove(komodostate);
+    path vaporumstate = GetDataDir() / VAPORUM_STATE_FILENAME;
+    remove(vaporumstate);
     path minerids = GetDataDir() / "minerids";
     remove(minerids);
     // Remove all block files that aren't part of a contiguous set starting at
@@ -718,7 +718,7 @@ void ThreadImport(std::vector<boost::filesystem::path> vImportFiles)
         LogPrintf("Reindexing finished\n");
         // To avoid ending up in a situation without genesis block, re-try initializing (no-op if reindexing worked):
         InitBlockIndex();
-        KOMODO_LOADINGBLOCKS = false;
+        VAPORUM_LOADINGBLOCKS = false;
     }
 
     // hardcoded $DATADIR/bootstrap.dat
@@ -872,7 +872,7 @@ bool AppInitServers(boost::thread_group& threadGroup)
     return true;
 }
 
-//extern int32_t KOMODO_REWIND;
+//extern int32_t VAPORUM_REWIND;
 
 /***
  * Initialize everything and fire up the services
@@ -1137,7 +1137,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
     RegisterAllCoreRPCCommands(tableRPC);
 #ifdef ENABLE_WALLET
     bool fDisableWallet = GetBoolArg("-disablewallet", false);
-    if ( KOMODO_NSPV_SUPERLITE )
+    if ( VAPORUM_NSPV_SUPERLITE )
     {
         fDisableWallet = true;
         nLocalServices = 0;
@@ -1218,7 +1218,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
     // Option to startup with mocktime set (used for regression testing):
     SetMockTime(GetArg("-mocktime", 0)); // SetMockTime(0) is a no-op
 
-    if ( KOMODO_NSPV_FULLNODE )
+    if ( VAPORUM_NSPV_FULLNODE )
     {
         if (GetBoolArg("-peerbloomfilters", true))
             nLocalServices |= NODE_BLOOM;
@@ -1294,7 +1294,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
 
     // Sanity check
     if (!InitSanityCheck())
-        return InitError(_("Initialization sanity check failed. Komodo is shutting down."));
+        return InitError(_("Initialization sanity check failed. Vaporum is shutting down."));
 
     std::string strDataDir = GetDataDir().string();
 #ifdef ENABLE_WALLET
@@ -1310,9 +1310,9 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
     try {
         static boost::interprocess::file_lock lock(pathLockFile.string().c_str());
         if (!lock.try_lock())
-            return InitError(strprintf(_("Cannot obtain a lock on data directory %s. Komodo is probably already running."), strDataDir));
+            return InitError(strprintf(_("Cannot obtain a lock on data directory %s. Vaporum is probably already running."), strDataDir));
     } catch(const boost::interprocess::interprocess_exception& e) {
-        return InitError(strprintf(_("Cannot obtain a lock on data directory %s. Komodo is probably already running.") + " %s.", strDataDir, e.what()));
+        return InitError(strprintf(_("Cannot obtain a lock on data directory %s. Vaporum is probably already running.") + " %s.", strDataDir, e.what()));
     }
 
 #ifndef _WIN32
@@ -1321,7 +1321,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
     if (GetBoolArg("-shrinkdebugfile", !fDebug))
         ShrinkDebugFile();
     //LogPrintf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    LogPrintf("Komodo version %s (%s)\n", FormatFullVersion(), CLIENT_DATE);
+    LogPrintf("Vaporum version %s (%s)\n", FormatFullVersion(), CLIENT_DATE);
 
     if (fPrintToDebugLog)
         OpenDebugLog();
@@ -1372,7 +1372,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
     libsnark::inhibit_profiling_info = true;
     libsnark::inhibit_profiling_counters = true;
 
-    if ( KOMODO_NSPV_FULLNODE )
+    if ( VAPORUM_NSPV_FULLNODE )
     {
 		uiInterface.InitMessage(_("Loading Sapling parameters..."));
         // Initialize Zcash circuit parameters
@@ -1557,7 +1557,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
     }
 #endif
 
-    if ( KOMODO_NSPV_SUPERLITE )
+    if ( VAPORUM_NSPV_SUPERLITE )
     {
         std::vector<boost::filesystem::path> vImportFiles;
         threadGroup.create_thread(boost::bind(&ThreadImport, vImportFiles));
@@ -1656,7 +1656,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
 
 
                 if (fReindex) {
-                    boost::filesystem::remove(GetDataDir() / KOMODO_STATE_FILENAME);
+                    boost::filesystem::remove(GetDataDir() / VAPORUM_STATE_FILENAME);
                     boost::filesystem::remove(GetDataDir() / "signedmasks");
                     pblocktree->WriteReindexing(true);
                     //If we're reindexing in prune mode, wipe away unusable block files and all undo data files
@@ -1678,13 +1678,13 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
                 if (!mapBlockIndex.empty() && mapBlockIndex.count(chainparams.GetConsensus().hashGenesisBlock) == 0)
                     return InitError(_("Incorrect or no genesis block found. Wrong datadir for network?"));
                 
-                komodo_init(1);
+                vaporum_init(1);
                 // Initialize the block index (no-op if non-empty database was already loaded)
                 if (!InitBlockIndex()) {
                     strLoadError = _("Error initializing block database");
                     break;
                 }
-                KOMODO_LOADINGBLOCKS = false;
+                VAPORUM_LOADINGBLOCKS = false;
                 // Check for changed -txindex state
                 if (fTxIndex != GetBoolArg("-txindex", true)) {
                     strLoadError = _("You need to rebuild the database using -reindex to change -txindex");
@@ -1698,9 +1698,9 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
                     break;
                 }
                 
-                if ( ASSETCHAINS_CC != 0 && KOMODO_SNAPSHOT_INTERVAL != 0 && chainActive.Height() >= KOMODO_SNAPSHOT_INTERVAL )
+                if ( ASSETCHAINS_CC != 0 && VAPORUM_SNAPSHOT_INTERVAL != 0 && chainActive.Height() >= VAPORUM_SNAPSHOT_INTERVAL )
                 {
-                    if ( !komodo_dailysnapshot(chainActive.Height()) )
+                    if ( !vaporum_dailysnapshot(chainActive.Height()) )
                     {
                         strLoadError = _("daily snapshot failed, please reindex your chain.");
                         break;
@@ -1720,7 +1720,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
                     LogPrintf("Prune: pruned datadir may not have more than %d blocks; -checkblocks=%d may fail\n",
                         MIN_BLOCKS_TO_KEEP, GetArg("-checkblocks", 288));
                 }
-                if ( KOMODO_REWIND == 0 )
+                if ( VAPORUM_REWIND == 0 )
                 {
                     if (!CVerifyDB().VerifyDB(pcoinsdbview, GetArg("-checklevel", 3),
                                               GetArg("-checkblocks", 288))) {
@@ -1755,7 +1755,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
             }
         }
     }
-    KOMODO_LOADINGBLOCKS = false;
+    VAPORUM_LOADINGBLOCKS = false;
 
     // As LoadBlockIndex can take several minutes, it's possible the user
     // requested to kill the GUI during the last operation. If so, exit.
@@ -1816,7 +1816,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
                 InitWarning(msg);
             }
             else if (nLoadWalletRet == DB_TOO_NEW)
-                strErrors << _("Error loading wallet.dat: Wallet requires newer version of Komodo") << "\n";
+                strErrors << _("Error loading wallet.dat: Wallet requires newer version of Vaporum") << "\n";
             else if (nLoadWalletRet == DB_NEED_REWRITE)
             {
                 strErrors << _("Wallet needed to be rewritten: restart Zcash to complete") << "\n";
@@ -1965,7 +1965,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
             PruneAndFlush();
         }
     }
-    if ( KOMODO_NSPV == 0 )
+    if ( VAPORUM_NSPV == 0 )
     {
         if ( GetBoolArg("-addressindex", DEFAULT_ADDRESSINDEX) != 0 )
             nLocalServices |= NODE_ADDRINDEX;
@@ -1977,7 +1977,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
 
     if (mapArgs.count("-blocknotify"))
         uiInterface.NotifyBlockTip.connect(BlockNotifyCallback);
-    if ( KOMODO_REWIND >= 0 )
+    if ( VAPORUM_REWIND >= 0 )
     {
         uiInterface.InitMessage(_("Activating best chain..."));
         // scan for better chains in the block chain database, that are not yet connected in the active best chain

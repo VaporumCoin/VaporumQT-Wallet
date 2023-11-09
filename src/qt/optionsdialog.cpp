@@ -9,7 +9,7 @@
 #include "optionsdialog.h"
 #include "ui_optionsdialog.h"
 
-#include "komodounits.h"
+#include "vaporumunits.h"
 #include "guiutil.h"
 #include "optionsmodel.h"
 
@@ -73,10 +73,10 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     /* Display elements init */
     QDir translations(":translations");
 
-    ui->komodoAtStartup->setToolTip(ui->komodoAtStartup->toolTip().arg(tr(PACKAGE_NAME)));
-    ui->komodoAtStartup->setText(ui->komodoAtStartup->text().arg(tr(PACKAGE_NAME)));
+    ui->vaporumAtStartup->setToolTip(ui->vaporumAtStartup->toolTip().arg(tr(PACKAGE_NAME)));
+    ui->vaporumAtStartup->setText(ui->vaporumAtStartup->text().arg(tr(PACKAGE_NAME)));
 
-    ui->openKomodoConfButton->setToolTip(ui->openKomodoConfButton->toolTip().arg(tr(PACKAGE_NAME)));
+    ui->openVaporumConfButton->setToolTip(ui->openVaporumConfButton->toolTip().arg(tr(PACKAGE_NAME)));
 
     ui->lang->setToolTip(ui->lang->toolTip().arg(tr(PACKAGE_NAME)));
     ui->lang->addItem(QString("(") + tr("default") + QString(")"), QVariant(""));
@@ -110,7 +110,7 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     ui->thirdPartyTxUrls->setPlaceholderText("https://example.com/tx/%s");
 #endif
 
-    ui->unit->setModel(new KomodoUnits(this));
+    ui->unit->setModel(new VaporumUnits(this));
 
     /* Widget-to-option mapper */
     mapper = new QDataWidgetMapper(this);
@@ -172,7 +172,7 @@ void OptionsDialog::setModel(OptionsModel *_model)
 void OptionsDialog::setMapper()
 {
     /* Main */
-    mapper->addMapping(ui->komodoAtStartup, OptionsModel::StartAtStartup);
+    mapper->addMapping(ui->vaporumAtStartup, OptionsModel::StartAtStartup);
     mapper->addMapping(ui->threadsScriptVerif, OptionsModel::ThreadsScriptVerif);
     mapper->addMapping(ui->databaseCache, OptionsModel::DatabaseCache);
 
@@ -228,7 +228,7 @@ void OptionsDialog::on_resetButton_clicked()
     }
 }
 
-void OptionsDialog::on_openKomodoConfButton_clicked()
+void OptionsDialog::on_openVaporumConfButton_clicked()
 {
     /* explain the purpose of the config file */
     QMessageBox::information(this, tr("Configuration options"),
@@ -236,7 +236,7 @@ void OptionsDialog::on_openKomodoConfButton_clicked()
            "Additionally, any command-line options will override this configuration file."));
 
     /* show an error if there was some problem opening the file */
-    if (!GUIUtil::openKomodoConf())
+    if (!GUIUtil::openVaporumConf())
         QMessageBox::critical(this, tr("Error"), tr("The configuration file could not be opened."));
 }
 

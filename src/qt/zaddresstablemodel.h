@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_ZADDRESSTABLEMODEL_H
-#define KOMODO_QT_ZADDRESSTABLEMODEL_H
+#ifndef VAPORUM_QT_ZADDRESSTABLEMODEL_H
+#define VAPORUM_QT_ZADDRESSTABLEMODEL_H
 
 #include <QAbstractTableModel>
 #include <QStringList>
@@ -30,7 +30,7 @@ public:
         isMine = 0,
         Balance = 1,
         Label = 2,   /**< User specified label */
-        Address = 3  /**< Komodo z-address */
+        Address = 3  /**< Vaporum z-address */
     };
 
     enum RoleIndex {
@@ -97,4 +97,4 @@ public Q_SLOTS:
     friend class ZAddressTablePriv;
 };
 
-#endif // KOMODO_QT_ZADDRESSTABLEMODEL_H
+#endif // VAPORUM_QT_ZADDRESSTABLEMODEL_H

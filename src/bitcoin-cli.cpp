@@ -48,7 +48,7 @@ std::string HelpMessageCli()
     std::string strUsage;
     strUsage += HelpMessageGroup(_("Options:"));
     strUsage += HelpMessageOpt("-?", _("This help message"));
-    strUsage += HelpMessageOpt("-conf=<file>", strprintf(_("Specify configuration file (default: %s)"), "komodo.conf"));
+    strUsage += HelpMessageOpt("-conf=<file>", strprintf(_("Specify configuration file (default: %s)"), "vaporum.conf"));
     strUsage += HelpMessageOpt("-datadir=<dir>", _("Specify data directory"));
     strUsage += HelpMessageOpt("-testnet", _("Use the test network"));
     strUsage += HelpMessageOpt("-regtest", _("Enter regression test mode, which uses a special chain in which blocks can be "
@@ -102,12 +102,12 @@ static int AppInitRPC(int argc, char* argv[])
         chainName = assetchain(name);
 
     if (argc<2 || mapArgs.count("-?") || mapArgs.count("-h") || mapArgs.count("-help") || mapArgs.count("-version")) {
-        std::string strUsage = _("Komodo RPC client version") + " " + FormatFullVersion() + "\n" + PrivacyInfo();
+        std::string strUsage = _("Vaporum RPC client version") + " " + FormatFullVersion() + "\n" + PrivacyInfo();
         if (!mapArgs.count("-version")) {
             strUsage += "\n" + _("Usage:") + "\n" +
-                  "  komodo-cli [options] <command> [params]  " + _("Send command to Komodo") + "\n" +
-                  "  komodo-cli [options] help                " + _("List commands") + "\n" +
-                  "  komodo-cli [options] help <command>      " + _("Get help for a command") + "\n";
+                  "  vaporum-cli [options] <command> [params]  " + _("Send command to Vaporum") + "\n" +
+                  "  vaporum-cli [options] help                " + _("List commands") + "\n" +
+                  "  vaporum-cli [options] help <command>      " + _("Get help for a command") + "\n";
 
             strUsage += "\n" + HelpMessageCli();
         } else {

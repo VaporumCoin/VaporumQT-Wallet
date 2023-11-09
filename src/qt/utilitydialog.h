@@ -2,13 +2,13 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_UTILITYDIALOG_H
-#define KOMODO_QT_UTILITYDIALOG_H
+#ifndef VAPORUM_QT_UTILITYDIALOG_H
+#define VAPORUM_QT_UTILITYDIALOG_H
 
 #include <QDialog>
 #include <QObject>
 
-class KomodoOceanGUI;
+class VaporumOceanGUI;
 
 namespace Ui {
     class HelpMessageDialog;
@@ -42,10 +42,10 @@ class ShutdownWindow : public QWidget
 
 public:
     explicit ShutdownWindow(QWidget *parent=0, Qt::WindowFlags f=0);
-    static QWidget *showShutdownWindow(KomodoOceanGUI *window);
+    static QWidget *showShutdownWindow(VaporumOceanGUI *window);
 
 protected:
     void closeEvent(QCloseEvent *event);
 };
 
-#endif // KOMODO_QT_UTILITYDIALOG_H
+#endif // VAPORUM_QT_UTILITYDIALOG_H

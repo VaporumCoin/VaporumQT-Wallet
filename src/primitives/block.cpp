@@ -24,7 +24,7 @@
 #include "tinyformat.h"
 #include "utilstrencodings.h"
 #include "crypto/common.h"
-#include "komodo_defs.h"
+#include "vaporum_defs.h"
 
 
 // default hash algorithm for block

@@ -20,7 +20,7 @@ This file contains only **dev** notes. It's a some kind of notepad or "scribbles
 
 
 ```
-objdump -T src/qt/komodo-qt | grep 2.25
+objdump -T src/qt/vaporum-qt | grep 2.25
 0000000000000000      DF *UND*	0000000000000000  GLIBC_2.25  __explicit_bzero_chk
 0000000000000000  w   DF *UND*	0000000000000000  GLIBC_2.25  getentropy
 ```
@@ -42,7 +42,7 @@ AX_CHECK_LINK_FLAG([[-Wl,--wrap=log2f]], [COMPAT_LDFLAGS="$COMPAT_LDFLAGS -Wl,--
 MacOS static build now produce the following binary:
 
 ```
-src/qt/komodo-qt:
+src/qt/vaporum-qt:
 	/usr/local/opt/gcc@6/lib/gcc/6/libstdc++.6.dylib (compatibility version 7.0.0, current version 7.22.0)
 	/System/Library/Frameworks/DiskArbitration.framework/Versions/A/DiskArbitration (compatibility version 1.0.0, current version 1.0.0)
 	/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit (compatibility version 1.0.0, current version 275.0.0)
@@ -76,9 +76,9 @@ So, the solution is build with gcc6, but link with gcc8, like `../libtool  --tag
 
 ### part 3 (optimisations)
 
-since we have [Add SSE4 optimized SHA256](https://github.com/DeckerSU/KomodoOcean/commit/9c22593e70b7ee493767e8a469173c2c85b09620) and `--enable-experimental-asm` build flag, probably we need to change SHA256 implementation in other places, like:
+since we have [Add SSE4 optimized SHA256](https://github.com/DeckerSU/VaporumOcean/commit/9c22593e70b7ee493767e8a469173c2c85b09620) and `--enable-experimental-asm` build flag, probably we need to change SHA256 implementation in other places, like:
 
-`komodo_utils.h`
+`vaporum_utils.h`
 ```
 void vcalc_sha256(char deprecated[(256 >> 3) * 2 + 1],uint8_t hash[256 >> 3],uint8_t *src,int32_t len)
 {
@@ -104,7 +104,7 @@ bcz few procedures uses `vcalc_sha256` even to check incoming block, so it needs
 
 ### part 4
 
-- Probably we have some unexpected / unpredictable behavior (strange side-effect) with this [linux_release_CFLAGS: -O1 -> -O2](https://github.com/DeckerSU/KomodoOcean/commit/511b27aba1c53b05acdc2a169eb374017b7b9145) commit. When wallet built with `CXXFLAGS='-g0 -O2'` all is ok, when with `CXXFLAGS='-g -O2'` - it's ok too. But when we tried to build wallet with just `CXXFLAGS='-g'` in `zcutil/build.sh ` it crashed somewhere in init of [CDBEnv](https://github.com/DeckerSU/KomodoOcean/blob/b8d315bbbece1cb3786855dae40de70a3f8385f0/src/wallet/db.cpp#L49). So, i just want to mention it here. In future it should be investigated to find a solution, may be commit should be reverted or additional BDB build flags should be added.
+- Probably we have some unexpected / unpredictable behavior (strange side-effect) with this [linux_release_CFLAGS: -O1 -> -O2](https://github.com/DeckerSU/VaporumOcean/commit/511b27aba1c53b05acdc2a169eb374017b7b9145) commit. When wallet built with `CXXFLAGS='-g0 -O2'` all is ok, when with `CXXFLAGS='-g -O2'` - it's ok too. But when we tried to build wallet with just `CXXFLAGS='-g'` in `zcutil/build.sh ` it crashed somewhere in init of [CDBEnv](https://github.com/DeckerSU/VaporumOcean/blob/b8d315bbbece1cb3786855dae40de70a3f8385f0/src/wallet/db.cpp#L49). So, i just want to mention it here. In future it should be investigated to find a solution, may be commit should be reverted or additional BDB build flags should be added.
 
 ### part 5
 
@@ -133,5 +133,5 @@ valgrind --leak-check=full \
          --track-origins=yes \
          --verbose \
          --log-file=valgrind-out.txt \
-         ./src/komodo-test --gtest_filter=ParseArgumentsTests.*:DeckerTests.*
+         ./src/vaporum-test --gtest_filter=ParseArgumentsTests.*:DeckerTests.*
 ```

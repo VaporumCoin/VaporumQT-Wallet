@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_RECEIVECOINSDIALOG_H
-#define KOMODO_QT_RECEIVECOINSDIALOG_H
+#ifndef VAPORUM_QT_RECEIVECOINSDIALOG_H
+#define VAPORUM_QT_RECEIVECOINSDIALOG_H
 
 #include "guiutil.h"
 
@@ -77,4 +77,4 @@ private Q_SLOTS:
     void copyAmount();
 };
 
-#endif // KOMODO_QT_RECEIVECOINSDIALOG_H
+#endif // VAPORUM_QT_RECEIVECOINSDIALOG_H

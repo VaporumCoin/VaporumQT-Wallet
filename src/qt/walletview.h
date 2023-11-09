@@ -2,14 +2,14 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_WALLETVIEW_H
-#define KOMODO_QT_WALLETVIEW_H
+#ifndef VAPORUM_QT_WALLETVIEW_H
+#define VAPORUM_QT_WALLETVIEW_H
 
 #include "amount.h"
 
 #include <QStackedWidget>
 
-class KomodoOceanGUI;
+class VaporumOceanGUI;
 class ClientModel;
 class OverviewPage;
 class PlatformStyle;
@@ -41,13 +41,13 @@ public:
     explicit WalletView(const PlatformStyle *platformStyle, QWidget *parent);
     ~WalletView();
 
-    void setKomodoOceanGUI(KomodoOceanGUI *gui);
+    void setVaporumOceanGUI(VaporumOceanGUI *gui);
     /** Set the client model.
         The client model represents the part of the core that communicates with the P2P network, and is wallet-agnostic.
     */
     void setClientModel(ClientModel *clientModel);
     /** Set the wallet model.
-        The wallet model represents a komodo wallet, and offers access to the list of transactions, address book and sending
+        The wallet model represents a vaporum wallet, and offers access to the list of transactions, address book and sending
         functionality.
     */
     void setWalletModel(WalletModel *walletModel);
@@ -138,4 +138,4 @@ Q_SIGNALS:
     void setPrivacy(bool privacy);
 };
 
-#endif // KOMODO_QT_WALLETVIEW_H
+#endif // VAPORUM_QT_WALLETVIEW_H

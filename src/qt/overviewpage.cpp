@@ -5,7 +5,7 @@
 #include "overviewpage.h"
 #include "ui_overviewpage.h"
 
-#include "komodounits.h"
+#include "vaporumunits.h"
 #include "clientmodel.h"
 #include "guiconstants.h"
 #include "guiutil.h"
@@ -14,7 +14,7 @@
 #include "transactionfilterproxy.h"
 #include "transactiontablemodel.h"
 #include "walletmodel.h"
-#include "util.h" // for KOMODO_ASSETCHAIN_MAXLEN
+#include "util.h" // for VAPORUM_ASSETCHAIN_MAXLEN
 
 #include <QAbstractItemDelegate>
 #include <QApplication>
@@ -29,7 +29,7 @@ class TxViewDelegate : public QAbstractItemDelegate
     Q_OBJECT
 public:
     explicit TxViewDelegate(const PlatformStyle *_platformStyle, QObject *parent=nullptr):
-        QAbstractItemDelegate(parent), unit(KomodoUnits::KMD),
+        QAbstractItemDelegate(parent), unit(VaporumUnits::KMD),
         platformStyle(_platformStyle)
     {
 
@@ -87,7 +87,7 @@ public:
             foreground = option.palette.color(QPalette::Text);
         }
         painter->setPen(foreground);
-        QString amountText = KomodoUnits::formatWithUnit(unit, amount, true, KomodoUnits::separatorAlways);
+        QString amountText = VaporumUnits::formatWithUnit(unit, amount, true, VaporumUnits::separatorAlways);
         if(!confirmed)
         {
             amountText = QString("[") + amountText + QString("]");
@@ -193,17 +193,17 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     currentWatchImmatureBalance = watchImmatureBalance;
     currentPrivateBalance = privateBalance;
     currentInterestBalance = interestBalance;
-    ui->labelBalance->setText(KomodoUnits::formatWithPrivacy(unit, balance, KomodoUnits::separatorAlways, m_privacy));
-    ui->labelUnconfirmed->setText(KomodoUnits::formatWithPrivacy(unit, unconfirmedBalance, KomodoUnits::separatorAlways, m_privacy));
-    ui->labelImmature->setText(KomodoUnits::formatWithPrivacy(unit, immatureBalance, KomodoUnits::separatorAlways, m_privacy));
-    ui->labelTotal->setText(KomodoUnits::formatWithPrivacy(unit, balance + unconfirmedBalance + immatureBalance + privateBalance + interestBalance, KomodoUnits::separatorAlways, m_privacy));
-    ui->labelWatchAvailable->setText(KomodoUnits::formatWithPrivacy(unit, watchOnlyBalance, KomodoUnits::separatorAlways, m_privacy));
-    ui->labelWatchPending->setText(KomodoUnits::formatWithPrivacy(unit, watchUnconfBalance, KomodoUnits::separatorAlways, m_privacy));
-    ui->labelWatchImmature->setText(KomodoUnits::formatWithPrivacy(unit, watchImmatureBalance, KomodoUnits::separatorAlways, m_privacy));
-    ui->labelWatchTotal->setText(KomodoUnits::formatWithPrivacy(unit, watchOnlyBalance + watchUnconfBalance + watchImmatureBalance, KomodoUnits::separatorAlways, m_privacy));
+    ui->labelBalance->setText(VaporumUnits::formatWithPrivacy(unit, balance, VaporumUnits::separatorAlways, m_privacy));
+    ui->labelUnconfirmed->setText(VaporumUnits::formatWithPrivacy(unit, unconfirmedBalance, VaporumUnits::separatorAlways, m_privacy));
+    ui->labelImmature->setText(VaporumUnits::formatWithPrivacy(unit, immatureBalance, VaporumUnits::separatorAlways, m_privacy));
+    ui->labelTotal->setText(VaporumUnits::formatWithPrivacy(unit, balance + unconfirmedBalance + immatureBalance + privateBalance + interestBalance, VaporumUnits::separatorAlways, m_privacy));
+    ui->labelWatchAvailable->setText(VaporumUnits::formatWithPrivacy(unit, watchOnlyBalance, VaporumUnits::separatorAlways, m_privacy));
+    ui->labelWatchPending->setText(VaporumUnits::formatWithPrivacy(unit, watchUnconfBalance, VaporumUnits::separatorAlways, m_privacy));
+    ui->labelWatchImmature->setText(VaporumUnits::formatWithPrivacy(unit, watchImmatureBalance, VaporumUnits::separatorAlways, m_privacy));
+    ui->labelWatchTotal->setText(VaporumUnits::formatWithPrivacy(unit, watchOnlyBalance + watchUnconfBalance + watchImmatureBalance, VaporumUnits::separatorAlways, m_privacy));
 
-    ui->labelPrivateBalance->setText(KomodoUnits::formatWithPrivacy(unit, privateBalance, KomodoUnits::separatorAlways, m_privacy));
-    ui->labelInterestBalance->setText(KomodoUnits::formatWithPrivacy(unit, interestBalance, KomodoUnits::separatorAlways, m_privacy));
+    ui->labelPrivateBalance->setText(VaporumUnits::formatWithPrivacy(unit, privateBalance, VaporumUnits::separatorAlways, m_privacy));
+    ui->labelInterestBalance->setText(VaporumUnits::formatWithPrivacy(unit, interestBalance, VaporumUnits::separatorAlways, m_privacy));
 
     // only show immature (newly mined) balance if it's non-zero, so as not to complicate things
     // for the non-mining users

@@ -32,8 +32,8 @@
 #include "scheduler.h"
 #include "ui_interface.h"
 #include "crypto/common.h"
-#include "komodo_defs.h"
-#include "komodo_globals.h"
+#include "vaporum_defs.h"
+#include "vaporum_globals.h"
 #include "notaries_staked.h"
 
 #ifdef _WIN32
@@ -455,13 +455,13 @@ void CNode::CloseSocketDisconnect()
 }
 
 /* TODO remove
-#ifndef KOMODO_NSPV_FULLNODE
-#define KOMODO_NSPV_FULLNODE (KOMODO_NSPV <= 0)
-#endif // !KOMODO_NSPV_FULLNODE
+#ifndef VAPORUM_NSPV_FULLNODE
+#define VAPORUM_NSPV_FULLNODE (VAPORUM_NSPV <= 0)
+#endif // !VAPORUM_NSPV_FULLNODE
 
-#ifndef KOMODO_NSPV_SUPERLITE
-#define KOMODO_NSPV_SUPERLITE (KOMODO_NSPV > 0)
-#endif // !KOMODO_NSPV_SUPERLITE
+#ifndef VAPORUM_NSPV_SUPERLITE
+#define VAPORUM_NSPV_SUPERLITE (VAPORUM_NSPV > 0)
+#endif // !VAPORUM_NSPV_SUPERLITE
 */
 
 void CNode::PushVersion()
@@ -1981,7 +1981,7 @@ bool StopNode()
         for (int i=0; i<MAX_OUTBOUND_CONNECTIONS; i++)
             semOutbound->post();
 
-    if (KOMODO_NSPV_FULLNODE && fAddressesInitialized)
+    if (VAPORUM_NSPV_FULLNODE && fAddressesInitialized)
     {
         DumpAddresses();
         fAddressesInitialized = false;

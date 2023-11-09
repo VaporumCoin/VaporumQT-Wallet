@@ -23,7 +23,7 @@
 #include "consensus/consensus.h"
 #include "consensus/validation.h"
 #include "core_io.h"
-#include "komodo_bitcoind.h"
+#include "vaporum_bitcoind.h"
 #ifdef ENABLE_MINING
 #include "crypto/equihash.h"
 #endif
@@ -162,7 +162,7 @@ UniValue getgenerate(const UniValue& params, bool fHelp, const CPubKey& mypk)
         throw runtime_error(
             "getgenerate\n"
             "\nReturn if the server is set to mine and/or mint coins or not. The default is false.\n"
-            "It is set with the command line argument -gen (or komodo.conf setting gen) and -mint\n"
+            "It is set with the command line argument -gen (or vaporum.conf setting gen) and -mint\n"
             "It can also be set with the setgenerate call.\n"
             "\nResult\n"
             "{\n"
@@ -182,7 +182,7 @@ UniValue getgenerate(const UniValue& params, bool fHelp, const CPubKey& mypk)
         staking = true;
     obj.push_back(Pair("staking",          staking));
     obj.push_back(Pair("generate",         GetBoolArg("-gen", false) && GetBoolArg("-genproclimit", -1) != 0 ));
-    obj.push_back(Pair("numthreads",       (int64_t)KOMODO_MININGTHREADS));
+    obj.push_back(Pair("numthreads",       (int64_t)VAPORUM_MININGTHREADS));
     return obj;
 }
 
@@ -253,7 +253,7 @@ std::shared_ptr<CBlock> generateBlock(CWallet* wallet, CValidationState* validat
         nHeight = chainActive.Height();
     }
 
-    std::unique_ptr<CBlockTemplate> pblocktemplate(CreateNewBlockWithKey(reservekey,nHeight,KOMODO_MAXGPUCOUNT));
+    std::unique_ptr<CBlockTemplate> pblocktemplate(CreateNewBlockWithKey(reservekey,nHeight,VAPORUM_MAXGPUCOUNT));
     if (pblocktemplate == nullptr)
         return nullptr;
 
@@ -303,7 +303,7 @@ UniValue generate(const UniValue& params, bool fHelp, const CPubKey& mypk)
             throw JSONRPCError(RPC_METHOD_NOT_FOUND, "Wallet disabled and -mineraddress not set");
         }
 #else
-        throw JSONRPCError(RPC_METHOD_NOT_FOUND, "komodod compiled without wallet and -mineraddress not set");
+        throw JSONRPCError(RPC_METHOD_NOT_FOUND, "vaporumd compiled without wallet and -mineraddress not set");
 #endif
     }
     if (!Params().MineBlocksOnDemand())
@@ -344,7 +344,7 @@ UniValue generate(const UniValue& params, bool fHelp, const CPubKey& mypk)
         lastTime = GetTime();
 
 #ifdef ENABLE_WALLET
-        std::unique_ptr<CBlockTemplate> pblocktemplate(CreateNewBlockWithKey(reservekey,nHeight,KOMODO_MAXGPUCOUNT));
+        std::unique_ptr<CBlockTemplate> pblocktemplate(CreateNewBlockWithKey(reservekey,nHeight,VAPORUM_MAXGPUCOUNT));
 #else
         std::unique_ptr<CBlockTemplate> pblocktemplate(CreateNewBlockWithKey());
 #endif
@@ -397,7 +397,7 @@ UniValue setgenerate(const UniValue& params, bool fHelp, const CPubKey& mypk)
             throw JSONRPCError(RPC_METHOD_NOT_FOUND, "Wallet disabled and -mineraddress not set");
         }
 #else
-        throw JSONRPCError(RPC_METHOD_NOT_FOUND, "komodod compiled without wallet and -mineraddress not set");
+        throw JSONRPCError(RPC_METHOD_NOT_FOUND, "vaporumd compiled without wallet and -mineraddress not set");
 #endif
     }
     if (Params().MineBlocksOnDemand())
@@ -415,10 +415,10 @@ UniValue setgenerate(const UniValue& params, bool fHelp, const CPubKey& mypk)
         //    fGenerate = false;
     }
 
-    KOMODO_MININGTHREADS = (int32_t)nGenProcLimit;
+    VAPORUM_MININGTHREADS = (int32_t)nGenProcLimit;
 
     mapArgs["-gen"] = (fGenerate ? "1" : "0");
-    mapArgs ["-genproclimit"] = itostr(KOMODO_MININGTHREADS);
+    mapArgs ["-genproclimit"] = itostr(VAPORUM_MININGTHREADS);
 
 #ifdef ENABLE_WALLET
     GenerateBitcoins(fGenerate, pwalletMain, nGenProcLimit);
@@ -442,10 +442,10 @@ UniValue genminingCSV(const UniValue& params, bool fHelp, const CPubKey& mypk)
     if ( (fp= fopen(fname,"wb")) != 0 )
     {
         fprintf(fp,"height,nTime,nBits,bnTarget,bnTargetB,diff,solvetime\n");
-        height = komodo_nextheight();
+        height = vaporum_nextheight();
         for (i=0; i<height; i++)
         {
-            if ( (pindex= komodo_chainactive(i)) != 0 )
+            if ( (pindex= vaporum_chainactive(i)) != 0 )
             {
                 bnTarget.SetCompact(pindex->nBits,&fNegative,&fOverflow);
                 solvetime = (prevtime==0) ? 0 : (int32_t)(pindex->nTime - prevtime);
@@ -530,7 +530,7 @@ UniValue getmininginfo(const UniValue& params, bool fHelp, const CPubKey& mypk)
         staking = true;
     obj.push_back(Pair("staking",          staking));
     obj.push_back(Pair("generate",         GetBoolArg("-gen", false) && GetBoolArg("-genproclimit", -1) != 0 ));
-    obj.push_back(Pair("numthreads",       (int64_t)KOMODO_MININGTHREADS));
+    obj.push_back(Pair("numthreads",       (int64_t)VAPORUM_MININGTHREADS));
 #endif
     return obj;
 }
@@ -659,7 +659,7 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp, const CPubKey& myp
             throw JSONRPCError(RPC_METHOD_NOT_FOUND, "Wallet disabled and -mineraddress not set");
         }
 #else
-        throw JSONRPCError(RPC_METHOD_NOT_FOUND, "komodod compiled without wallet and -mineraddress not set");
+        throw JSONRPCError(RPC_METHOD_NOT_FOUND, "vaporumd compiled without wallet and -mineraddress not set");
 #endif
     }
     
@@ -733,12 +733,12 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp, const CPubKey& myp
 
     if (Params().MiningRequiresPeers() && fvNodesEmpty)
     {
-        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Komodo is not connected!");
+        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Vaporum is not connected!");
     }
 
     // currently we have checkpoints only in KMD chain, so we checking IsInitialBlockDownload only for KMD itself
     if (chainName.isKMD() && IsInitialBlockDownload()) {
-        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Komodo is downloading blocks...");
+        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Vaporum is downloading blocks...");
     }
 
     static unsigned int nTransactionsUpdatedLast;
@@ -813,7 +813,7 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp, const CPubKey& myp
 #ifdef ENABLE_WALLET
         CReserveKey reservekey(pwalletMain);
         LEAVE_CRITICAL_SECTION(cs_main);
-        pblocktemplate = CreateNewBlockWithKey(reservekey,pindexPrevNew->nHeight+1,KOMODO_MAXGPUCOUNT,false);
+        pblocktemplate = CreateNewBlockWithKey(reservekey,pindexPrevNew->nHeight+1,VAPORUM_MAXGPUCOUNT,false);
 #else
         pblocktemplate = CreateNewBlockWithKey();
 #endif
@@ -905,7 +905,7 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp, const CPubKey& myp
     if ( ASSETCHAINS_STAKED != 0 )
     {
         arith_uint256 POWtarget; int32_t PoSperc;
-        POWtarget = komodo_PoWtarget(&PoSperc,hashTarget,(int32_t)(pindexPrev->nHeight+1),ASSETCHAINS_STAKED,komodo_newStakerActive(chainActive.Height()+1, pblock->nTime));
+        POWtarget = vaporum_PoWtarget(&PoSperc,hashTarget,(int32_t)(pindexPrev->nHeight+1),ASSETCHAINS_STAKED,vaporum_newStakerActive(chainActive.Height()+1, pblock->nTime));
         result.push_back(Pair("target", POWtarget.GetHex()));
         result.push_back(Pair("PoSperc", (int64_t)PoSperc));
         result.push_back(Pair("ac_staked", (int64_t)ASSETCHAINS_STAKED));
@@ -1113,14 +1113,14 @@ UniValue getblocksubsidy(const UniValue& params, bool fHelp, const CPubKey& mypk
             {
                 CBlockIndex* pblockIndex = chainActive[nHeight];
                 CBlock block;
-                if ( komodo_blockload(block, pblockIndex) == 0 )
-                    nFoundersReward = komodo_commission(&block, nHeight);
+                if ( vaporum_blockload(block, pblockIndex) == 0 )
+                    nFoundersReward = vaporum_commission(&block, nHeight);
             }
         }
         else if ( ASSETCHAINS_FOUNDERS != 0 )
         {
             // Assetchains founders chains have a fixed reward so can be calculated at any given height.
-            nFoundersReward = komodo_commission(0, nHeight);
+            nFoundersReward = vaporum_commission(0, nHeight);
         }
         result.push_back(Pair("ac_pubkey", ValueFromAmount(nFoundersReward)));
     }

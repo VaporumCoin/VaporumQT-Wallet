@@ -57,7 +57,7 @@
       <item>
        <widget class="QValidatedLineEdit" name="payTo">
         <property name="toolTip">
-         <string>The Komodo address to send the payment to</string>
+         <string>The Vaporum address to send the payment to</string>
         </property>
        </widget>
       </item>
@@ -70,7 +70,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../komodo.qrc">
+         <iconset resource="../vaporum.qrc">
           <normaloff>:/icons/address-book</normaloff>:/icons/address-book</iconset>
         </property>
         <property name="iconSize">
@@ -93,7 +93,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../komodo.qrc">
+         <iconset resource="../vaporum.qrc">
           <normaloff>:/icons/editpaste</normaloff>:/icons/editpaste</iconset>
         </property>
         <property name="iconSize">
@@ -116,7 +116,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../komodo.qrc">
+         <iconset resource="../vaporum.qrc">
           <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
         </property>
         <property name="iconSize">
@@ -168,7 +168,7 @@
        <number>10</number>
       </property>
       <item>
-       <widget class="KomodoAmountField" name="payAmount"/>
+       <widget class="VaporumAmountField" name="payAmount"/>
       </item>
       <item>
        <widget class="QCheckBox" name="checkboxSubtractFeeFromAmount">
@@ -206,7 +206,7 @@
     <item row="3" column="1">
      <widget class="QLabel" name="messageTextLabel">
       <property name="toolTip">
-       <string>A message that was attached to the komodo: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Komodo network.</string>
+       <string>A message that was attached to the vaporum: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Vaporum network.</string>
       </property>
       <property name="textFormat">
        <enum>Qt::PlainText</enum>
@@ -678,7 +678,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../komodo.qrc">
+         <iconset resource="../vaporum.qrc">
           <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
         </property>
        </widget>
@@ -716,7 +716,7 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="KomodoAmountField" name="payAmount_is">
+     <widget class="VaporumAmountField" name="payAmount_is">
       <property name="acceptDrops">
        <bool>false</bool>
       </property>
@@ -1211,7 +1211,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../komodo.qrc">
+         <iconset resource="../vaporum.qrc">
           <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
         </property>
        </widget>
@@ -1249,7 +1249,7 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="KomodoAmountField" name="payAmount_s">
+     <widget class="VaporumAmountField" name="payAmount_s">
       <property name="acceptDrops">
        <bool>false</bool>
       </property>
@@ -1265,9 +1265,9 @@
    <header>qvalidatedlineedit.h</header>
   </customwidget>
   <customwidget>
-   <class>KomodoAmountField</class>
+   <class>VaporumAmountField</class>
    <extends>QLineEdit</extends>
-   <header>komodoamountfield.h</header>
+   <header>vaporumamountfield.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
@@ -1284,7 +1284,7 @@
   <tabstop>deleteButton_s</tabstop>
  </tabstops>
  <resources>
-  <include location="../komodo.qrc"/>
+  <include location="../vaporum.qrc"/>
  </resources>
  <connections/>
 </ui>

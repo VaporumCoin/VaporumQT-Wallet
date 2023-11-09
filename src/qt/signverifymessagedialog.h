@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_SIGNVERIFYMESSAGEDIALOG_H
-#define KOMODO_QT_SIGNVERIFYMESSAGEDIALOG_H
+#ifndef VAPORUM_QT_SIGNVERIFYMESSAGEDIALOG_H
+#define VAPORUM_QT_SIGNVERIFYMESSAGEDIALOG_H
 
 #include <QDialog>
 
@@ -50,4 +50,4 @@ private Q_SLOTS:
     void on_clearButton_VM_clicked();
 };
 
-#endif // KOMODO_QT_SIGNVERIFYMESSAGEDIALOG_H
+#endif // VAPORUM_QT_SIGNVERIFYMESSAGEDIALOG_H

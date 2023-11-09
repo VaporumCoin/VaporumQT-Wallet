@@ -73,13 +73,13 @@
                </size>
               </property>
               <property name="toolTip">
-               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the Komodo network after a connection is established, but this process has not completed yet.</string>
+               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the Vaporum network after a connection is established, but this process has not completed yet.</string>
               </property>
               <property name="text">
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../komodo.qrc">
+               <iconset resource="../vaporum.qrc">
                 <normaloff>:/icons/warning</normaloff>
                 <disabledoff>:/icons/warning</disabledoff>:/icons/warning</iconset>
               </property>
@@ -483,17 +483,17 @@
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+        <widget class="QLabel" name="label">
+         <property name="styleSheet">
+          <string notr="true">image: url(:/icons/vaporum);</string>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
+         <property name="text">
+          <string/>
          </property>
-        </spacer>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -535,13 +535,13 @@
                </size>
               </property>
               <property name="toolTip">
-               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the Komodo network after a connection is established, but this process has not completed yet.</string>
+               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the Vaporum network after a connection is established, but this process has not completed yet.</string>
               </property>
               <property name="text">
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../komodo.qrc">
+               <iconset resource="../vaporum.qrc">
                 <normaloff>:/icons/warning</normaloff>
                 <disabledoff>:/icons/warning</disabledoff>:/icons/warning</iconset>
               </property>
@@ -613,7 +613,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../komodo.qrc"/>
+  <include location="../vaporum.qrc"/>
  </resources>
  <connections/>
 </ui>

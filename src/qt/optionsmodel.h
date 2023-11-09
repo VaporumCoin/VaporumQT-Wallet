@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_OPTIONSMODEL_H
-#define KOMODO_QT_OPTIONSMODEL_H
+#ifndef VAPORUM_QT_OPTIONSMODEL_H
+#define VAPORUM_QT_OPTIONSMODEL_H
 
 #include "amount.h"
 
@@ -15,7 +15,7 @@ class QNetworkProxy;
 #endif
 QT_END_NAMESPACE
 
-/** Interface from Qt to configuration data structure for Komodo client.
+/** Interface from Qt to configuration data structure for Vaporum client.
    To Qt, the options are presented as a list with the different options
    laid out vertically.
    This can be changed to a tree once the settings become sufficiently
@@ -40,7 +40,7 @@ public:
         ProxyUseTor,            // bool
         ProxyIPTor,             // QString
         ProxyPortTor,           // int
-        DisplayUnit,            // KomodoUnits::Unit
+        DisplayUnit,            // VaporumUnits::Unit
         ThirdPartyTxUrls,       // QString
         Language,               // QString
         CoinControlFeatures,    // bool
@@ -99,4 +99,4 @@ Q_SIGNALS:
     void hideTrayIconChanged(bool);
 };
 
-#endif // KOMODO_QT_OPTIONSMODEL_H
+#endif // VAPORUM_QT_OPTIONSMODEL_H

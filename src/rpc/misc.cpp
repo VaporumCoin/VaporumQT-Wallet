@@ -31,10 +31,10 @@
 #include "cc/eval.h"
 #include "cc/CCinclude.h"
 #include "hex.h"
-#include "komodo_bitcoind.h"
-#include "komodo_notary.h"
-#include "komodo_utils.h"
-#include "komodo_globals.h"
+#include "vaporum_bitcoind.h"
+#include "vaporum_notary.h"
+#include "vaporum_utils.h"
+#include "vaporum_globals.h"
 #include "cc/CCinclude.h"
 #ifdef ENABLE_WALLET
 #include "wallet/wallet.h"
@@ -67,21 +67,21 @@ using namespace std;
 
 /*int32_t Jumblr_depositaddradd(char *depositaddr);
 int32_t Jumblr_secretaddradd(char *secretaddr);
-int32_t komodo_notarized_height(int32_t *prevMoMheightp,uint256 *hashp,uint256 *txidp);
-bool komodo_txnotarizedconfirmed(uint256 txid);
-uint32_t komodo_chainactive_timestamp();
-int32_t komodo_whoami(char *pubkeystr,int32_t height,uint32_t timestamp);
-extern uint64_t KOMODO_INTERESTSUM,KOMODO_WALLETBALANCE;
-extern bool IS_KOMODO_NOTARY;
-extern int32_t KOMODO_LASTMINED,JUMBLR_PAUSE,KOMODO_LONGESTCHAIN,STAKED_NOTARY_ID,STAKED_ERA,KOMODO_INSYNC;
-uint32_t komodo_segid32(char *coinaddr);
-int64_t komodo_coinsupply(int64_t *zfundsp,int64_t *sproutfundsp,int32_t height);
+int32_t vaporum_notarized_height(int32_t *prevMoMheightp,uint256 *hashp,uint256 *txidp);
+bool vaporum_txnotarizedconfirmed(uint256 txid);
+uint32_t vaporum_chainactive_timestamp();
+int32_t vaporum_whoami(char *pubkeystr,int32_t height,uint32_t timestamp);
+extern uint64_t VAPORUM_INTERESTSUM,VAPORUM_WALLETBALANCE;
+extern bool IS_VAPORUM_NOTARY;
+extern int32_t VAPORUM_LASTMINED,JUMBLR_PAUSE,VAPORUM_LONGESTCHAIN,STAKED_NOTARY_ID,STAKED_ERA,VAPORUM_INSYNC;
+uint32_t vaporum_segid32(char *coinaddr);
+int64_t vaporum_coinsupply(int64_t *zfundsp,int64_t *sproutfundsp,int32_t height);
 int32_t notarizedtxid_height(char *dest,char *txidstr,int32_t *kmdnotarized_heightp);
 int8_t StakedNotaryID(std::string &notaryname, char *Raddress);
-uint64_t komodo_notarypayamount(int32_t nHeight, int64_t notarycount);
-int32_t komodo_notaries(uint8_t pubkeys[64][33],int32_t height,uint32_t timestamp);*/
+uint64_t vaporum_notarypayamount(int32_t nHeight, int64_t notarycount);
+int32_t vaporum_notaries(uint8_t pubkeys[64][33],int32_t height,uint32_t timestamp);*/
 
-#define KOMODO_VERSION "0.8.1"
+#define VAPORUM_VERSION "0.8.1"
 extern uint16_t ASSETCHAINS_P2PPORT,ASSETCHAINS_RPCPORT;
 extern uint32_t ASSETCHAINS_CC;
 extern uint32_t ASSETCHAINS_MAGIC,ASSETCHAINS_ALGO;
@@ -125,7 +125,7 @@ UniValue getiguanajson(const UniValue& params, bool fHelp, const CPubKey& mypk)
         notaries.push_back(notary);
     }
 
-    // get the min sigs .. this always rounds UP so min sigs in iguana is +1 min sigs in komodod, due to some rounding error.
+    // get the min sigs .. this always rounds UP so min sigs in iguana is +1 min sigs in vaporumd, due to some rounding error.
     int minsigs;
     if ( num_notaries_STAKED[era]/5 > overrideMinSigs )
         minsigs = (num_notaries_STAKED[era] / 5) + 1;
@@ -219,7 +219,7 @@ UniValue getinfo(const UniValue& params, bool fHelp, const CPubKey& mypk)
             "  \"version\": xxxxx,           (numeric) the server version\n"
             "  \"protocolversion\": xxxxx,   (numeric) the protocol version\n"
             "  \"walletversion\": xxxxx,     (numeric) the wallet version\n"
-            "  \"balance\": xxxxxxx,         (numeric) the total Komodo balance of the wallet\n"
+            "  \"balance\": xxxxxxx,         (numeric) the total Vaporum balance of the wallet\n"
             "  \"blocks\": xxxxxx,           (numeric) the current number of blocks processed in the server\n"
             "  \"timeoffset\": xxxxx,        (numeric) the time offset (deprecated; always 0)\n"
             "  \"connections\": xxxxx,       (numeric) the number of connections\n"
@@ -245,19 +245,19 @@ UniValue getinfo(const UniValue& params, bool fHelp, const CPubKey& mypk)
 
     proxyType proxy;
     GetProxy(NET_IPV4, proxy);
-    notarized_height = komodo_notarized_height(&prevMoMheight,&notarized_hash,&notarized_desttxid);
+    notarized_height = vaporum_notarized_height(&prevMoMheight,&notarized_hash,&notarized_desttxid);
     //LogPrintf("after notarized_height %u\n",(uint32_t)time(NULL));
 
     UniValue obj(UniValue::VOBJ);
     obj.push_back(Pair("version", CLIENT_VERSION));
     obj.push_back(Pair("protocolversion", PROTOCOL_VERSION));
-    obj.push_back(Pair("KMDversion", KOMODO_VERSION));
-    obj.push_back(Pair("synced", KOMODO_INSYNC!=0));
+    obj.push_back(Pair("KMDversion", VAPORUM_VERSION));
+    obj.push_back(Pair("synced", VAPORUM_INSYNC!=0));
     obj.push_back(Pair("notarized", notarized_height));
     obj.push_back(Pair("prevMoMheight", prevMoMheight));
     obj.push_back(Pair("notarizedhash", notarized_hash.ToString()));
     obj.push_back(Pair("notarizedtxid", notarized_desttxid.ToString()));
-    if ( KOMODO_NSPV_FULLNODE )
+    if ( VAPORUM_NSPV_FULLNODE )
     {
         txid_height = notarizedtxid_height(!chainName.isKMD() ? (char *)"KMD" : (char *)"BTC",(char *)notarized_desttxid.ToString().c_str(),&kmdnotarized_height);
         if ( txid_height > 0 )
@@ -272,8 +272,8 @@ UniValue getinfo(const UniValue& params, bool fHelp, const CPubKey& mypk)
             obj.push_back(Pair("walletversion", pwalletMain->GetVersion()));
             if ( chainName.isKMD() )
             {
-                obj.push_back(Pair("interest",       ValueFromAmount(KOMODO_INTERESTSUM)));
-                obj.push_back(Pair("balance",       ValueFromAmount(KOMODO_WALLETBALANCE))); //pwalletMain->GetBalance()
+                obj.push_back(Pair("interest",       ValueFromAmount(VAPORUM_INTERESTSUM)));
+                obj.push_back(Pair("balance",       ValueFromAmount(VAPORUM_WALLETBALANCE))); //pwalletMain->GetBalance()
             }
             else
             {
@@ -283,7 +283,7 @@ UniValue getinfo(const UniValue& params, bool fHelp, const CPubKey& mypk)
 #endif
         //fprintf(stderr,"after wallet %u\n",(uint32_t)time(NULL));
         obj.push_back(Pair("blocks",        (int)chainActive.Height()));
-        if ( (longestchain= KOMODO_LONGESTCHAIN) != 0 && chainActive.Height() > longestchain )
+        if ( (longestchain= VAPORUM_LONGESTCHAIN) != 0 && chainActive.Height() > longestchain )
             longestchain = chainActive.Height();
         //fprintf(stderr,"after longestchain %u\n",(uint32_t)time(NULL));
         obj.push_back(Pair("longestchain",        longestchain));
@@ -312,10 +312,10 @@ UniValue getinfo(const UniValue& params, bool fHelp, const CPubKey& mypk)
         if ( (notaryid= StakedNotaryID(notaryname, (char *)NOTARY_ADDRESS.c_str())) != -1 ) {
             obj.push_back(Pair("notaryid",        notaryid));
             obj.push_back(Pair("notaryname",      notaryname));
-        } else if( (notaryid= komodo_whoami(pubkeystr,(int32_t)chainActive.Tip()->nHeight,komodo_chainactive_timestamp())) >= 0 )  {
+        } else if( (notaryid= vaporum_whoami(pubkeystr,(int32_t)chainActive.Tip()->nHeight,vaporum_chainactive_timestamp())) >= 0 )  {
             obj.push_back(Pair("notaryid",        notaryid));
-            if ( KOMODO_LASTMINED != 0 )
-                obj.push_back(Pair("lastmined", KOMODO_LASTMINED));
+            if ( VAPORUM_LASTMINED != 0 )
+                obj.push_back(Pair("lastmined", VAPORUM_LASTMINED));
         }
         obj.push_back(Pair("pubkey", NOTARY_PUBKEY));
     }
@@ -456,7 +456,7 @@ UniValue coinsupply(const UniValue& params, bool fHelp, const CPubKey& mypk)
     currentHeight = chainActive.Height();
 
     if (height >= 0 && height <= currentHeight) {
-        if ( (supply= komodo_coinsupply(&zfunds,&sproutfunds,height)) > 0 )
+        if ( (supply= vaporum_coinsupply(&zfunds,&sproutfunds,height)) > 0 )
         {
             result.push_back(Pair("result", "success"));
             result.push_back(Pair("coin", chainName.ToString()));
@@ -470,9 +470,9 @@ UniValue coinsupply(const UniValue& params, bool fHelp, const CPubKey& mypk)
                 blocks_per_year = 24*3600*365 / ASSETCHAINS_BLOCKTIME;
                 if ( height > blocks_per_year )
                 {
-                    supply1 = komodo_coinsupply(&zf1,&sf1,height - blocks_per_year/12);
-                    supply3 = komodo_coinsupply(&zf3,&sf3,height - blocks_per_year/4);
-                    supply12 = komodo_coinsupply(&zf12,&sf12,height - blocks_per_year);
+                    supply1 = vaporum_coinsupply(&zf1,&sf1,height - blocks_per_year/12);
+                    supply3 = vaporum_coinsupply(&zf3,&sf3,height - blocks_per_year/4);
+                    supply12 = vaporum_coinsupply(&zf12,&sf12,height - blocks_per_year);
                     if ( supply1 != 0 && supply3 != 0 && supply12 != 0 )
                     {
                         result.push_back(Pair("lastmonth", ValueFromAmount(supply1+zf1)));
@@ -497,14 +497,14 @@ UniValue validateaddress(const UniValue& params, bool fHelp, const CPubKey& mypk
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "validateaddress \"komodoaddress\"\n"
-            "\nReturn information about the given Komodo address.\n"
+            "validateaddress \"vaporumaddress\"\n"
+            "\nReturn information about the given Vaporum address.\n"
             "\nArguments:\n"
-            "1. \"komodoaddress\"     (string, required) The Komodo address to validate\n"
+            "1. \"vaporumaddress\"     (string, required) The Vaporum address to validate\n"
             "\nResult:\n"
             "{\n"
             "  \"isvalid\" : true|false,         (boolean) If the address is valid or not. If not, this is the only property returned.\n"
-            "  \"address\" : \"komodoaddress\",   (string) The Komodo address validated\n"
+            "  \"address\" : \"vaporumaddress\",   (string) The Vaporum address validated\n"
             "  \"scriptPubKey\" : \"hex\",       (string) The hex encoded scriptPubKey generated by the address\n"
             "  \"ismine\" : true|false,          (boolean) If the address is yours or not\n"
             "  \"isscript\" : true|false,        (boolean) If the key is a script\n"
@@ -535,7 +535,7 @@ UniValue validateaddress(const UniValue& params, bool fHelp, const CPubKey& mypk
 
         CScript scriptPubKey = GetScriptForDestination(dest);
         ret.push_back(Pair("scriptPubKey", HexStr(scriptPubKey.begin(), scriptPubKey.end())));
-        ret.push_back(Pair("segid", (int32_t)komodo_segid32((char *)params[0].get_str().c_str()) & 0x3f));
+        ret.push_back(Pair("segid", (int32_t)vaporum_segid32((char *)params[0].get_str().c_str()) & 0x3f));
 #ifdef ENABLE_WALLET
         isminetype mine = pwalletMain ? IsMine(*pwalletMain, dest) : ISMINE_NO;
         ret.push_back(Pair("ismine", (mine & ISMINE_SPENDABLE) ? true : false));
@@ -708,9 +708,9 @@ UniValue createmultisig(const UniValue& params, bool fHelp, const CPubKey& mypk)
 
             "\nArguments:\n"
             "1. nrequired      (numeric, required) The number of required signatures out of the n keys or addresses.\n"
-            "2. \"keys\"       (string, required) A json array of keys which are Komodo addresses or hex-encoded public keys\n"
+            "2. \"keys\"       (string, required) A json array of keys which are Vaporum addresses or hex-encoded public keys\n"
             "     [\n"
-            "       \"key\"    (string) Komodo address or hex-encoded public key\n"
+            "       \"key\"    (string) Vaporum address or hex-encoded public key\n"
             "       ,...\n"
             "     ]\n"
 
@@ -744,10 +744,10 @@ UniValue verifymessage(const UniValue& params, bool fHelp, const CPubKey& mypk)
 {
     if (fHelp || params.size() != 3)
         throw runtime_error(
-            "verifymessage \"komodoaddress\" \"signature\" \"message\"\n"
+            "verifymessage \"vaporumaddress\" \"signature\" \"message\"\n"
             "\nVerify a signed message\n"
             "\nArguments:\n"
-            "1. \"komodoaddress\"    (string, required) The Komodo address to use for the signature.\n"
+            "1. \"vaporumaddress\"    (string, required) The Vaporum address to use for the signature.\n"
             "2. \"signature\"       (string, required) The signature provided by the signer in base 64 encoding (see signmessage).\n"
             "3. \"message\"         (string, required) The message that was signed.\n"
             "\nResult:\n"
@@ -1255,8 +1255,8 @@ UniValue getnotarypayinfo(const UniValue& params, bool fHelp, const CPubKey& myp
     // pubkey 020000000000000000000000000000000
     balance = checkburnaddress(received, TotalNotaryPay, height, "REDVp3ox1pbcWYCzySadfHhk8UU3HM4k5x");
     
-    notarycount = komodo_notaries(notarypubkeys, height, chainActive[height]->GetBlockTime());
-    NotaryPay = komodo_notarypayamount(height, notarycount)*notarycount;
+    notarycount = vaporum_notaries(notarypubkeys, height, chainActive[height]->GetBlockTime());
+    NotaryPay = vaporum_notarypayamount(height, notarycount)*notarycount;
     bool spent = (received != balance);
     if ( !spent )
     {
@@ -1332,7 +1332,7 @@ UniValue getaddressbalance(const UniValue& params, bool fHelp, const CPubKey& my
 
 }
 
-UniValue komodo_snapshot(int top);
+UniValue vaporum_snapshot(int top);
 
 UniValue getsnapshot(const UniValue& params, bool fHelp, const CPubKey& mypk)
 {
@@ -1342,7 +1342,7 @@ UniValue getsnapshot(const UniValue& params, bool fHelp, const CPubKey& mypk)
         top = atoi(params[0].get_str().c_str());
         if ( top < 0 ) 
         {
-            if ( KOMODO_SNAPSHOT_INTERVAL == 0 )
+            if ( VAPORUM_SNAPSHOT_INTERVAL == 0 )
                 throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, top must be a positive integer");
             else 
                 top = -1;
@@ -1382,7 +1382,7 @@ UniValue getsnapshot(const UniValue& params, bool fHelp, const CPubKey& mypk)
 			    + HelpExampleRpc("getsnapshot", "1000")
                             );
     }
-    result = komodo_snapshot(top);
+    result = vaporum_snapshot(top);
     if ( result.size() > 0 ) {
         result.push_back(Pair("end_time", (int) time(NULL)));
     } else {
@@ -1543,7 +1543,7 @@ UniValue txnotarizedconfirmed(const UniValue& params, bool fHelp, const CPubKey&
         throw runtime_error(msg);
     }
     txid = uint256S((char *)params[0].get_str().c_str());
-    notarizedconfirmed=komodo_txnotarizedconfirmed(txid);
+    notarizedconfirmed=vaporum_txnotarizedconfirmed(txid);
     UniValue result(UniValue::VOBJ);
     result.push_back(Pair("result", notarizedconfirmed));
     return result;

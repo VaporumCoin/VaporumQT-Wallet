@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_WALLETMODELZTRANSACTION_H
-#define KOMODO_QT_WALLETMODELZTRANSACTION_H
+#ifndef VAPORUM_QT_WALLETMODELZTRANSACTION_H
+#define VAPORUM_QT_WALLETMODELZTRANSACTION_H
 
 #include "walletmodel.h"
 #include "transaction_builder.h"
@@ -60,4 +60,4 @@ private:
     AsyncRPCOperationId operationId;
 };
 
-#endif // KOMODO_QT_WALLETMODELZTRANSACTION_H
+#endif // VAPORUM_QT_WALLETMODELZTRANSACTION_H

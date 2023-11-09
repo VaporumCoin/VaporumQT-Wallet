@@ -38,7 +38,7 @@
 #include "zcash/IncrementalMerkleTree.hpp"
 #include "sodium.h"
 #include "miner.h"
-#include "komodo_globals.h"
+#include "vaporum_globals.h"
 
 #include <array>
 #include <iostream>

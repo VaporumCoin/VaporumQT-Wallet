@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-# Environment for build KomodoOcean
+# Environment for build VaporumOcean
 
 # Build container:
 # docker build -f Dockerfile.xenial.ci --build-arg BUILDER_NAME=$USER --build-arg BUILDER_UID=$(id -u) --build-arg BUILDER_GID=$(id -g) -t ocean_xenial_builder .

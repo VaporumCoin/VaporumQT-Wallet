@@ -19,12 +19,12 @@
 
 #include "consensus/upgrades.h"
 #include "util.h"
-extern int32_t KOMODO_NSPV;
+extern int32_t VAPORUM_NSPV;
 #define NSPV_BRANCHID 0x76b809bb
 
-#ifndef KOMODO_NSPV_SUPERLITE
-#define KOMODO_NSPV_SUPERLITE (KOMODO_NSPV > 0)
-#endif // !KOMODO_NSPV_SUPERLITE
+#ifndef VAPORUM_NSPV_SUPERLITE
+#define VAPORUM_NSPV_SUPERLITE (VAPORUM_NSPV > 0)
+#endif // !VAPORUM_NSPV_SUPERLITE
 
 /**
  * General information about each network upgrade.
@@ -106,7 +106,7 @@ int CurrentEpoch(int nHeight, const Consensus::Params& params) {
 
 uint32_t CurrentEpochBranchId(int nHeight, const Consensus::Params& params)
 {
-    if ( KOMODO_NSPV_SUPERLITE )
+    if ( VAPORUM_NSPV_SUPERLITE )
         return(NSPV_BRANCHID);
     return NetworkUpgradeInfo[CurrentEpoch(nHeight, params)].nBranchId;
 }

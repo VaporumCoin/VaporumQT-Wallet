@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_ADDRESSTABLEMODEL_H
-#define KOMODO_QT_ADDRESSTABLEMODEL_H
+#ifndef VAPORUM_QT_ADDRESSTABLEMODEL_H
+#define VAPORUM_QT_ADDRESSTABLEMODEL_H
 
 #include <QAbstractTableModel>
 #include <QStringList>
@@ -29,7 +29,7 @@ public:
         isMine = 0,
         isWatchOnly = 1,
         Label = 2,   /**< User specified label */
-        Address = 3  /**< Komodo address */
+        Address = 3  /**< Vaporum address */
     };
 
     enum RoleIndex {
@@ -96,4 +96,4 @@ public Q_SLOTS:
     friend class AddressTablePriv;
 };
 
-#endif // KOMODO_QT_ADDRESSTABLEMODEL_H
+#endif // VAPORUM_QT_ADDRESSTABLEMODEL_H

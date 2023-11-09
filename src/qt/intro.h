@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_INTRO_H
-#define KOMODO_QT_INTRO_H
+#ifndef VAPORUM_QT_INTRO_H
+#define VAPORUM_QT_INTRO_H
 
 #include <QDialog>
 #include <QMutex>
@@ -75,4 +75,4 @@ private:
     friend class FreespaceChecker;
 };
 
-#endif // KOMODO_QT_INTRO_H
+#endif // VAPORUM_QT_INTRO_H

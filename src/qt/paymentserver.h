@@ -2,11 +2,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_PAYMENTSERVER_H
-#define KOMODO_QT_PAYMENTSERVER_H
+#ifndef VAPORUM_QT_PAYMENTSERVER_H
+#define VAPORUM_QT_PAYMENTSERVER_H
 
 // This class handles payment requests from clicking on
-// komodo: URIs
+// vaporum: URIs
 //
 // This is somewhat tricky, because we have to deal with
 // the situation where the user clicks on a link during
@@ -165,4 +165,4 @@ private:
     OptionsModel *optionsModel;
 };
 
-#endif // KOMODO_QT_PAYMENTSERVER_H
+#endif // VAPORUM_QT_PAYMENTSERVER_H

@@ -1,6 +1,6 @@
 #pragma once
 /******************************************************************************
- * Copyright © 2021 Komodo Core Deveelopers                                   *
+ * Copyright © 2021 Vaporum Core Deveelopers                                   *
  *                                                                            *
  * See the AUTHORS, DEVELOPER-AGREEMENT and LICENSE files at                  *
  * the top-level directory of this distribution for the individual copyright  *
@@ -14,7 +14,7 @@
  *                                                                            *
  ******************************************************************************/
 
-#include "komodo_structs.h" // for parse_error
+#include "vaporum_structs.h" // for parse_error
 
 #include <cstdint>
 #include <string>
@@ -32,7 +32,7 @@ std::size_t mem_read(T& dest, uint8_t *filedata, long &fpos, long datalen)
         fpos += sizeof(T);
         return sizeof(T);
     }
-    throw komodo::parse_error("Invalid size: " + std::to_string(sizeof(T)) );
+    throw vaporum::parse_error("Invalid size: " + std::to_string(sizeof(T)) );
 }
 
 template<class T, std::size_t N>
@@ -45,7 +45,7 @@ std::size_t mem_read(T(&dest)[N], uint8_t *filedata, long& fpos, long datalen)
         fpos += sz;
         return sz;
     }
-    throw komodo::parse_error("Invalid size: "  + std::to_string( sz ) );
+    throw vaporum::parse_error("Invalid size: "  + std::to_string( sz ) );
 }
 
 /****
@@ -61,5 +61,5 @@ std::size_t mem_nread(T(&dest)[N], size_t num_elements, uint8_t *filedata, long&
         fpos += sz;
         return sz;
     }
-    throw komodo::parse_error("Invalid size: " + std::to_string(sz));
+    throw vaporum::parse_error("Invalid size: " + std::to_string(sz));
 }

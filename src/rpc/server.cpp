@@ -269,7 +269,7 @@ UniValue stop(const UniValue& params, bool fHelp, const CPubKey& mypk)
     if (fHelp || params.size() > 1)
         throw runtime_error(
             "stop\n"
-            "\nStop Komodo server.");
+            "\nStop Vaporum server.");
 
 #ifdef ENABLE_WALLET
     GenerateBitcoins(false, pwalletMain, 0);
@@ -279,7 +279,7 @@ UniValue stop(const UniValue& params, bool fHelp, const CPubKey& mypk)
 
     // Shutdown will take long enough that the response should get back
     StartShutdown();
-    sprintf(buf,"%s server stopping", !chainName.isKMD() ? chainName.symbol().c_str() : "Komodo");
+    sprintf(buf,"%s server stopping", !chainName.isKMD() ? chainName.symbol().c_str() : "Vaporum");
     return buf;
 }
 
@@ -848,9 +848,9 @@ std::vector<std::string> CRPCTable::listCommands() const
 std::string HelpExampleCli(const std::string& methodname, const std::string& args)
 {
     if ( chainName.isKMD() ) {
-        return "> komodo-cli " + methodname + " " + args + "\n";
+        return "> vaporum-cli " + methodname + " " + args + "\n";
     } else {
-        return "> komodo-cli -ac_name=" + strprintf("%s", chainName.symbol().c_str()) + " " + methodname + " " + args + "\n";
+        return "> vaporum-cli -ac_name=" + strprintf("%s", chainName.symbol().c_str()) + " " + methodname + " " + args + "\n";
     }
 }
 
@@ -862,8 +862,8 @@ std::string HelpExampleRpc(const std::string& methodname, const std::string& arg
 
 string experimentalDisabledHelpMsg(const string& rpc, const string& enableArg)
 {
-    string daemon = "komodod";
-    string ticker = chainName.isKMD() ? "komodo" : chainName.symbol();
+    string daemon = "vaporumd";
+    string ticker = chainName.isKMD() ? "vaporum" : chainName.symbol();
 
     return "\nWARNING: " + rpc + " is disabled.\n"
         "To enable it, restart " + daemon + " with the -experimentalfeatures and\n"

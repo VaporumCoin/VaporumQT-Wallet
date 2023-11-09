@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_TRANSACTIONDESCDIALOG_H
-#define KOMODO_QT_TRANSACTIONDESCDIALOG_H
+#ifndef VAPORUM_QT_TRANSACTIONDESCDIALOG_H
+#define VAPORUM_QT_TRANSACTIONDESCDIALOG_H
 
 #include <QDialog>
 
@@ -28,4 +28,4 @@ private:
     Ui::TransactionDescDialog *ui;
 };
 
-#endif // KOMODO_QT_TRANSACTIONDESCDIALOG_H
+#endif // VAPORUM_QT_TRANSACTIONDESCDIALOG_H

@@ -11,7 +11,7 @@ import operator
 import os
 import sys
 
-OUT_CPP="qt/komodostrings.cpp"
+OUT_CPP="qt/vaporumstrings.cpp"
 EMPTY=['""']
 
 def parse_po(text):
@@ -75,11 +75,11 @@ f.write("""
 #define UNUSED
 #endif
 """)
-f.write('static const char UNUSED *komodo_strings[] = {\n')
-f.write('QT_TRANSLATE_NOOP("komodo-core", "%s"),\n' % (os.getenv('COPYRIGHT_HOLDERS'),))
+f.write('static const char UNUSED *vaporum_strings[] = {\n')
+f.write('QT_TRANSLATE_NOOP("vaporum-core", "%s"),\n' % (os.getenv('COPYRIGHT_HOLDERS'),))
 messages.sort(key=operator.itemgetter(0))
 for (msgid, msgstr) in messages:
     if msgid != EMPTY:
-        f.write('QT_TRANSLATE_NOOP("komodo-core", %s),\n' % ('\n'.join(msgid)))
+        f.write('QT_TRANSLATE_NOOP("vaporum-core", %s),\n' % ('\n'.join(msgid)))
 f.write('};\n')
 f.close()

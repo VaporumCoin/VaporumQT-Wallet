@@ -4,8 +4,8 @@
 
 #include "guiutil.h"
 
-#include "komodoaddressvalidator.h"
-#include "komodounits.h"
+#include "vaporumaddressvalidator.h"
+#include "vaporumunits.h"
 #include "qvalidatedlineedit.h"
 #include "walletmodel.h"
 
@@ -133,11 +133,11 @@ void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent, bool allowZ
 #if QT_VERSION >= 0x040700
     // We don't want translators to use own addresses in translations
     // and this is the only place, where this address is supplied.
-    widget->setPlaceholderText(QObject::tr("Enter a Komodo address (e.g. %1)").arg(
+    widget->setPlaceholderText(QObject::tr("Enter a Vaporum address (e.g. %1)").arg(
         QString::fromStdString(DummyAddress(Params()))));
 #endif
-    widget->setValidator(new KomodoAddressEntryValidator(parent, allowZAddresses));
-    widget->setCheckValidator(new KomodoAddressCheckValidator(parent, allowZAddresses));
+    widget->setValidator(new VaporumAddressEntryValidator(parent, allowZAddresses));
+    widget->setCheckValidator(new VaporumAddressCheckValidator(parent, allowZAddresses));
 }
 
 void setupAmountWidget(QLineEdit *widget, QWidget *parent)
@@ -149,10 +149,10 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
     widget->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
 }
 
-bool parseKomodoURI(const QUrl &uri, SendCoinsRecipient *out)
+bool parseVaporumURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    // return if URI is not valid or is no komodo: URI
-    if(!uri.isValid() || uri.scheme() != QString("komodo"))
+    // return if URI is not valid or is no vaporum: URI
+    if(!uri.isValid() || uri.scheme() != QString("vaporum"))
         return false;
 
     SendCoinsRecipient rv;
@@ -192,7 +192,7 @@ bool parseKomodoURI(const QUrl &uri, SendCoinsRecipient *out)
         {
             if(!i->second.isEmpty())
             {
-                if(!KomodoUnits::parse(KomodoUnits::KMD, i->second, &rv.amount))
+                if(!VaporumUnits::parse(VaporumUnits::KMD, i->second, &rv.amount))
                 {
                     return false;
                 }
@@ -210,28 +210,28 @@ bool parseKomodoURI(const QUrl &uri, SendCoinsRecipient *out)
     return true;
 }
 
-bool parseKomodoURI(QString uri, SendCoinsRecipient *out)
+bool parseVaporumURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert komodo:// to komodo:
+    // Convert vaporum:// to vaporum:
     //
-    //    Cannot handle this later, because komodo:// will cause Qt to see the part after // as host,
+    //    Cannot handle this later, because vaporum:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("komodo://", Qt::CaseInsensitive))
+    if(uri.startsWith("vaporum://", Qt::CaseInsensitive))
     {
-        uri.replace(0, 10, "komodo:");
+        uri.replace(0, 10, "vaporum:");
     }
     QUrl uriInstance(uri);
-    return parseKomodoURI(uriInstance, out);
+    return parseVaporumURI(uriInstance, out);
 }
 
-QString formatKomodoURI(const SendCoinsRecipient &info)
+QString formatVaporumURI(const SendCoinsRecipient &info)
 {
-    QString ret = QString("komodo:%1").arg(info.address);
+    QString ret = QString("vaporum:%1").arg(info.address);
     int paramCount = 0;
 
     if (info.amount)
     {
-        ret += QString("?amount=%1").arg(KomodoUnits::format(KomodoUnits::KMD, info.amount, false, KomodoUnits::separatorNever));
+        ret += QString("?amount=%1").arg(VaporumUnits::format(VaporumUnits::KMD, info.amount, false, VaporumUnits::separatorNever));
         paramCount++;
     }
 
@@ -421,7 +421,7 @@ void openDebugLogfile()
         QDesktopServices::openUrl(QUrl::fromLocalFile(boostPathToQString(pathDebug)));
 }
 
-bool openKomodoConf()
+bool openVaporumConf()
 {
     boost::filesystem::path pathConfig = GetConfigFile();
 
@@ -433,7 +433,7 @@ bool openKomodoConf()
     
     configFile.close();
     
-    /* Open komodo.conf with the associated application */
+    /* Open vaporum.conf with the associated application */
     return QDesktopServices::openUrl(QUrl::fromLocalFile(boostPathToQString(pathConfig)));
 }
 
@@ -622,15 +622,15 @@ fs::path static StartupShortcutPath()
 //    std::string chain = ChainNameFromCommandLine();
     CBaseChainParams::Network chain = NetworkIdFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Komodo.lnk";
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Vaporum.lnk";
     if (chain == CBaseChainParams::TESTNET) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Komodo (testnet).lnk";
-    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Komodo (%s).lnk", chain);
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Vaporum (testnet).lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Vaporum (%s).lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
 {
-    // check for Komodo*.lnk
+    // check for Vaporum*.lnk
     return fs::exists(StartupShortcutPath());
 }
 
@@ -721,8 +721,8 @@ fs::path static GetAutostartFilePath()
     //std::string chain = ChainNameFromCommandLine();
     CBaseChainParams::Network chain = NetworkIdFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
-        return GetAutostartDir() / "komodo.desktop";
-    return GetAutostartDir() / strprintf("komodo-%s.lnk", chain);
+        return GetAutostartDir() / "vaporum.desktop";
+    return GetAutostartDir() / strprintf("vaporum-%s.lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
@@ -763,13 +763,13 @@ bool SetStartOnSystemStartup(bool fAutoStart)
             return false;
         //std::string chain = ChainNameFromCommandLine();
         CBaseChainParams::Network chain = NetworkIdFromCommandLine();
-        // Write a komodo.desktop file to the autostart directory:
+        // Write a vaporum.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
         if (chain == CBaseChainParams::MAIN)
-            optionFile << "Name=Komodo\n";
+            optionFile << "Name=Vaporum\n";
         else
-            optionFile << strprintf("Name=Komodo (%s)\n", chain);
+            optionFile << strprintf("Name=Vaporum (%s)\n", chain);
         //optionFile << "Exec=" << pszExePath << strprintf(" -min -testnet=%d -regtest=%d\n", gArgs.GetBoolArg("-testnet", false), gArgs.GetBoolArg("-regtest", false));
         optionFile << "Exec=" << pszExePath << strprintf(" -min -testnet=%d -regtest=%d\n", GetBoolArg("-testnet", false), GetBoolArg("-regtest", false));
         optionFile << "Terminal=false\n";
@@ -797,7 +797,7 @@ LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef
         return nullptr;
     }
     
-    // loop through the list of startup items and try to find the komodo app
+    // loop through the list of startup items and try to find the vaporum app
     for(int i = 0; i < CFArrayGetCount(listSnapshot); i++) {
         LSSharedFileListItemRef item = (LSSharedFileListItemRef)CFArrayGetValueAtIndex(listSnapshot, i);
         UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
@@ -830,38 +830,38 @@ LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef
 
 bool GetStartOnSystemStartup()
 {
-    CFURLRef komodoAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-    if (komodoAppUrl == nullptr) {
+    CFURLRef vaporumAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+    if (vaporumAppUrl == nullptr) {
         return false;
     }
     
     LSSharedFileListRef loginItems = LSSharedFileListCreate(nullptr, kLSSharedFileListSessionLoginItems, nullptr);
-    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, komodoAppUrl);
+    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, vaporumAppUrl);
 
-    CFRelease(komodoAppUrl);
+    CFRelease(vaporumAppUrl);
     return !!foundItem; // return boolified object
 }
 
 bool SetStartOnSystemStartup(bool fAutoStart)
 {
-    CFURLRef komodoAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-    if (komodoAppUrl == nullptr) {
+    CFURLRef vaporumAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+    if (vaporumAppUrl == nullptr) {
         return false;
     }
     
     LSSharedFileListRef loginItems = LSSharedFileListCreate(nullptr, kLSSharedFileListSessionLoginItems, nullptr);
-    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, komodoAppUrl);
+    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, vaporumAppUrl);
 
     if(fAutoStart && !foundItem) {
-        // add komodo app to startup item list
-        LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst, nullptr, nullptr, komodoAppUrl, nullptr, nullptr);
+        // add vaporum app to startup item list
+        LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst, nullptr, nullptr, vaporumAppUrl, nullptr, nullptr);
     }
     else if(!fAutoStart && foundItem) {
         // remove item
         LSSharedFileListItemRemove(loginItems, foundItem);
     }
     
-    CFRelease(komodoAppUrl);
+    CFRelease(vaporumAppUrl);
     return true;
 }
 #pragma GCC diagnostic pop

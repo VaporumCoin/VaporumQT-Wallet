@@ -30,7 +30,7 @@
 #include "sync.h"
 #include "utilstrencodings.h"
 #include "utiltime.h"
-#include "komodo_globals.h"
+#include "vaporum_globals.h"
 
 #include <stdarg.h>
 #include <sstream>
@@ -518,7 +518,7 @@ static std::string FormatException(const std::exception* pex, const char* pszThr
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "Komodo";
+    const char* pszModule = "Vaporum";
 #endif
     if (pex)
         return strprintf(
@@ -576,11 +576,11 @@ boost::filesystem::path GetAppDir()
 }
 
 /****
- * @brief get the OS-specific default komodod data directory
- * @note Windows: be "C:\Users\[username]\AppData\Roaming\Komodo"
- * @note Mac: ~/Library/Application Support/Komodo
- * @note Unix: ~/.komodo
- * @returns the default path to the Komodo data directory
+ * @brief get the OS-specific default vaporumd data directory
+ * @note Windows: be "C:\Users\[username]\AppData\Roaming\Vaporum"
+ * @note Mac: ~/Library/Application Support/Vaporum
+ * @note Unix: ~/.vaporum
+ * @returns the default path to the Vaporum data directory
  */
 boost::filesystem::path GetDefaultDataDir()
 {    
@@ -589,11 +589,11 @@ boost::filesystem::path GetDefaultDataDir()
 #if defined(_WIN32) || defined(MAC_OSX)
     if (chainName.isKMD())
     {
-        pathRet /= "Komodo";
+        pathRet /= "Vaporum";
     }
     else
     {
-        pathRet /= "Komodo";
+        pathRet /= "Vaporum";
         TryCreateDirectory(pathRet);
         pathRet /= chainName.symbol();
     }
@@ -601,9 +601,9 @@ boost::filesystem::path GetDefaultDataDir()
 #else
     // Unix
     if (chainName.isKMD())
-        return pathRet / ".komodo";
+        return pathRet / ".vaporum";
     else 
-        return pathRet / ".komodo" / chainName.symbol();
+        return pathRet / ".vaporum" / chainName.symbol();
 #endif
 }
 
@@ -684,7 +684,7 @@ const boost::filesystem::path GetExportDir()
  * @note looks at the -datadir command-line parameter or OS-specific defaults
  * @note creates the directory if it does not already exist
  * @param fNetSpecific if true, adds network-specific subdirectory (i.e. "regtest" or "testnet3")
- * @returns the full OS-specific data directory including Komodo (i.e. "~/.komodo")
+ * @returns the full OS-specific data directory including Vaporum (i.e. "~/.vaporum")
  */
 const boost::filesystem::path &GetDataDir(bool fNetSpecific)
 {
@@ -731,9 +731,9 @@ boost::filesystem::path GetConfigFile()
     else
     {
 #ifdef __APPLE__
-        strcpy(confname,"Komodo.conf");
+        strcpy(confname,"Vaporum.conf");
 #else
-        strcpy(confname,"komodo.conf");
+        strcpy(confname,"vaporum.conf");
 #endif
     }
     boost::filesystem::path pathConfigFile(GetArg("-conf",confname));
@@ -756,7 +756,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
     for (boost::program_options::detail::config_file_iterator it(streamConfig, setOptions), end; it != end; ++it)
     {
-        // Don't overwrite existing settings so command line settings override komodo.conf
+        // Don't overwrite existing settings so command line settings override vaporum.conf
         string strKey = string("-") + it->string_key;
         if (mapSettingsRet.count(strKey) == 0)
         {
@@ -774,7 +774,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 #ifndef _WIN32
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", "komodod.pid"));
+    boost::filesystem::path pathPidFile(GetArg("-pid", "vaporumd.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }
@@ -1073,7 +1073,7 @@ std::string PrivacyInfo()
 std::string LicenseInfo()
 {
 
-    const std::string URL_SOURCE_CODE = "<https://github.com/KomodoPlatform/KomodoOcean>";
+    const std::string URL_SOURCE_CODE = "<https://github.com/VaporumPlatform/VaporumOcean>";
 
     return "\n" +
            FormatParagraph(strprintf(_("Copyright (C) 2009-%i The Bitcoin Core Developers"), COPYRIGHT_YEAR)) + "\n" +
@@ -1109,9 +1109,9 @@ std::string CopyrightHolders(const std::string& strPrefix)
 {
     std::string strCopyrightHolders = strPrefix + strprintf(_(COPYRIGHT_HOLDERS), _(COPYRIGHT_HOLDERS_SUBSTITUTION));
 
-    // Check for untranslated substitution to make sure Komodo Core copyright is not removed by accident
-    if (strprintf(COPYRIGHT_HOLDERS, COPYRIGHT_HOLDERS_SUBSTITUTION).find("Komodo Core") == std::string::npos) {
-        strCopyrightHolders += "\n" + strPrefix + "The Komodo Core developers";
+    // Check for untranslated substitution to make sure Vaporum Core copyright is not removed by accident
+    if (strprintf(COPYRIGHT_HOLDERS, COPYRIGHT_HOLDERS_SUBSTITUTION).find("Vaporum Core") == std::string::npos) {
+        strCopyrightHolders += "\n" + strPrefix + "The Vaporum Core developers";
     }
     return strCopyrightHolders;
 }

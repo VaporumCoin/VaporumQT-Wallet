@@ -18,7 +18,7 @@
  */
 
 #include "CCinclude.h"
-#include "komodo_structs.h"
+#include "vaporum_structs.h"
 
 int32_t unstringbits(char *buf,uint64_t bits)
 {

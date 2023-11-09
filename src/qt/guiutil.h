@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_GUIUTIL_H
-#define KOMODO_QT_GUIUTIL_H
+#ifndef VAPORUM_QT_GUIUTIL_H
+#define VAPORUM_QT_GUIUTIL_H
 
 #include "amount.h"
 #include "fs.h"
@@ -29,7 +29,7 @@ class QUrl;
 class QWidget;
 QT_END_NAMESPACE
 
-/** Utility functions used by the Komodo Qt UI.
+/** Utility functions used by the Vaporum Qt UI.
  */
 namespace GUIUtil
 {
@@ -44,10 +44,10 @@ namespace GUIUtil
     void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent, bool allowZAddresses = false);
     void setupAmountWidget(QLineEdit *widget, QWidget *parent);
 
-    // Parse "komodo:" URI into recipient object, return true on successful parsing
-    bool parseKomodoURI(const QUrl &uri, SendCoinsRecipient *out);
-    bool parseKomodoURI(QString uri, SendCoinsRecipient *out);
-    QString formatKomodoURI(const SendCoinsRecipient &info);
+    // Parse "vaporum:" URI into recipient object, return true on successful parsing
+    bool parseVaporumURI(const QUrl &uri, SendCoinsRecipient *out);
+    bool parseVaporumURI(QString uri, SendCoinsRecipient *out);
+    QString formatVaporumURI(const SendCoinsRecipient &info);
 
     // Returns true if given address+amount meets "dust" definition
     bool isDust(const QString& address, const CAmount& amount);
@@ -114,7 +114,7 @@ namespace GUIUtil
     void openDebugLogfile();
 
     // Open the config file
-    bool openKomodoConf();
+    bool openVaporumConf();
 
     // Replace invalid default fonts with known good ones
     void SubstituteFonts(const QString& language);
@@ -246,4 +246,4 @@ namespace GUIUtil
 
 } // namespace GUIUtil
 
-#endif // KOMODO_QT_GUIUTIL_H
+#endif // VAPORUM_QT_GUIUTIL_H

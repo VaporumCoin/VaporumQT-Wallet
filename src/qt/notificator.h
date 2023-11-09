@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_NOTIFICATOR_H
-#define KOMODO_QT_NOTIFICATOR_H
+#ifndef VAPORUM_QT_NOTIFICATOR_H
+#define VAPORUM_QT_NOTIFICATOR_H
 
 #if defined(HAVE_CONFIG_H)
 #include "config/bitcoin-config.h"
@@ -74,4 +74,4 @@ private:
 #endif
 };
 
-#endif // KOMODO_QT_NOTIFICATOR_H
+#endif // VAPORUM_QT_NOTIFICATOR_H

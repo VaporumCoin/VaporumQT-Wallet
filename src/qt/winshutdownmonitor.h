@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_QT_WINSHUTDOWNMONITOR_H
-#define KOMODO_QT_WINSHUTDOWNMONITOR_H
+#ifndef VAPORUM_QT_WINSHUTDOWNMONITOR_H
+#define VAPORUM_QT_WINSHUTDOWNMONITOR_H
 
 #ifdef WIN32
 #include <QByteArray>
@@ -26,4 +26,4 @@ public:
 #endif
 #endif
 
-#endif // KOMODO_QT_WINSHUTDOWNMONITOR_H
+#endif // VAPORUM_QT_WINSHUTDOWNMONITOR_H
