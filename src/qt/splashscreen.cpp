@@ -32,10 +32,10 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     // set reference point, paddings
     int paddingRight            = 50;
     int paddingTop              = 50;
-    int titleVersionVSpace      = 17;
+    int titleVersionVSpace      = 25;
     int titleCopyrightVSpace    = 40;
 
-    float fontFactor            = 1.0;
+    float fontFactor            = .80;
     float devicePixelRatio      = 1.0;
 #if QT_VERSION > 0x050100
     devicePixelRatio = ((QGuiApplication*)QCoreApplication::instance())->devicePixelRatio();
@@ -59,19 +59,21 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
 #endif
 
     QPainter pixPaint(&pixmap);
-    pixPaint.setPen(QColor(100,100,100));
+    // pixPaint.setPen(QColor(100,100,100));
+    pixPaint.setPen(QColor(247, 247, 247));
 
     // draw a slightly radial gradient
     QRadialGradient gradient(QPoint(0,0), splashSize.width()/devicePixelRatio);
     gradient.setColorAt(0, Qt::white);
-    gradient.setColorAt(1, QColor(247,247,247));
+  //  gradient.setColorAt(1, QColor(247,247,247));
+    gradient.setColorAt(1, QColor(100, 100, 100));
     QRect rGradient(QPoint(0,0), splashSize);
     pixPaint.fillRect(rGradient, gradient);
 
     // draw the vaporum icon, expected size of PNG: 1024x1024
-    // QRect rectIcon(QPoint(-150,-122), QSize(430,430));
+     QRect rectIcon(QPoint(-150,-122), QSize(430,430));
     // QRect rectIcon(QPoint(-50,-10), QSize(350,350));
-    QRect rectIcon(QPoint(5,15), QSize(280,280));
+    // QRect rectIcon(QPoint(5,15), QSize(280,280));
 
     const QSize requiredSize(1024,1024);
     QPixmap icon(networkStyle->getAppIcon().pixmap(requiredSize));
