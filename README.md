@@ -1,10 +1,10 @@
-# VaporumOcean (vaporum-qt) #
+# Vaporum (vaporum-qt) #
 
 ![Downloads](https://img.shields.io/github/downloads/DeckerSU/VaporumOcean/total)
 
 ![](./doc/images/vaporum-qt-promo-2020-01.jpg)
 
-Vaporum-Qt (VaporumOcean) is a world-first Qt native wallet for KMD ([Vaporum](https://vaporumplatform.com/)) and smartchains (assetchains). It's available for three OS platforms - Windows, Linux, MacOS.
+Vaporum-Qt is a Qt native wallet for VPRM ([Vaporum](https://www.vaporumcoin.us/)). It's available for three OS platforms - Windows, Linux, MacOS.
 
 Use the default `static` branch and following scripts to build:
 
@@ -13,7 +13,7 @@ Use the default `static` branch and following scripts to build:
 - MacOS: `build-mac-cross.sh` (cross-compilation for OSX)
 - MacOS: `build-mac.sh` (native build)
 
-Visit `#🤝│general-support` or `#wallet-ocean-qt` channel in [Vaporum Discord](https://vaporumplatform.com/discord) for more information.
+Visit `#🤝│general-support` channel in [Vaporum Discord](https://discord.gg/PQfsD8JxrR) for more information.
 
 ## How to build? ##
 
@@ -25,7 +25,7 @@ sudo apt-get install build-essential pkg-config libc6-dev m4 g++-multilib autoco
 ```
 
 ```shell
-git clone https://github.com/DeckerSU/VaporumOcean --branch static --single-branch
+git clone https://github.com/VaporumCoin/VaporumQT-Wallet.git --branch static --single-branch
 cd vaporum
 ./zcutil/fetch-params.sh
 # -j8 = using 8 threads for the compilation - replace 8 with number of threads you want to use
@@ -65,7 +65,7 @@ brew install protobuf
 brew install coreutils
 brew install wget
 # Clone the Vaporum repo
-git clone https://github.com/DeckerSU/VaporumOcean --branch static --single-branch
+git clone https://github.com/VaporumCoin/VaporumQT-Wallet.git --branch static --single-branch
 # Change master branch to other branch you wish to compile
 cd vaporum
 ./zcutil/fetch-params.sh
@@ -100,7 +100,7 @@ sudo update-alternatives --config x86_64-w64-mingw32-gcc
 sudo update-alternatives --config x86_64-w64-mingw32-g++
 # (configure to use POSIX variant)
 
-git clone https://github.com/DeckerSU/VaporumOcean --branch static --single-branch
+git clone https://github.com/VaporumCoin/VaporumQT-Wallet.git --branch static --single-branch
 cd vaporum
 ./zcutil/fetch-params.sh
 # -j8 = using 8 threads for the compilation - replace 8 with number of threads you want to use
