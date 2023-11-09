@@ -6,7 +6,7 @@ if [ "$HOST" = "x86_64-w64-mingw32" ]; then
   echo building rogue.exe...
   ./configure --host=x86_64-w64-mingw32
   echo $PWD
-  wget https://github.com/VaporumPlatform/rogue/releases/download/0.3.3b-01/x86_64-w64-mingw32.tar.gz
+  wget https://github.com/KomodoPlatform/rogue/releases/download/0.3.3b-01/x86_64-w64-mingw32.tar.gz
   tar xvfz x86_64-w64-mingw32.tar.gz && rm x86_64-w64-mingw32.tar.gz
   echo lib archive cleaned
   echo $PWD
