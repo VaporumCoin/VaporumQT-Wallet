@@ -100,6 +100,8 @@ sudo update-alternatives --config x86_64-w64-mingw32-gcc
 sudo update-alternatives --config x86_64-w64-mingw32-g++
 # (configure to use POSIX variant)
 
+sudo bash -c "echo 0 > /proc/sys/fs/binfmt_misc/status"
+
 git clone https://github.com/VaporumCoin/VaporumQT-Wallet.git --branch static --single-branch
 cd VaporumQT-Wallet
 ./zcutil/fetch-params.sh
