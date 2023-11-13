@@ -26,10 +26,10 @@ sudo apt-get install build-essential pkg-config libc6-dev m4 g++-multilib autoco
 
 ```shell
 git clone https://github.com/VaporumCoin/VaporumQT-Wallet.git --branch static --single-branch
-cd vaporum
+cd VaporumQT-Wallet
 ./zcutil/fetch-params.sh
 # -j8 = using 8 threads for the compilation - replace 8 with number of threads you want to use
-./zcutil/build-linux.sh -j8
+./zcutil/build.sh -j8
 #This can take some time.
 ```
 
@@ -67,7 +67,7 @@ brew install wget
 # Clone the Vaporum repo
 git clone https://github.com/VaporumCoin/VaporumQT-Wallet.git --branch static --single-branch
 # Change master branch to other branch you wish to compile
-cd vaporum
+cd VaporumQT-Wallet
 ./zcutil/fetch-params.sh
 # -j8 = using 8 threads for the compilation - replace 8 with number of threads you want to use
 ./zcutil/build-mac.sh -j8
